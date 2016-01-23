@@ -1,0 +1,27 @@
+---
+- resources:
+  - method: ALL
+    path: /foo/bar/.*
+  allow_x509_subject:
+    ou: ponycopter
+  allow_claims:
+    group: example
+- resources:
+  - method: GET
+    path: /baz/.*
+  allow_x509_subject:
+    ou: ponycopter
+- resources:
+  - method: ALL
+    path: /_admin/?.*
+  allow_claims:
+    group: admins
+- resources:
+  - method: GET
+    path: /internal/frobnobs/.*
+  allow_x509_subject:
+    ou: frobnobber
+- resources:
+  - method: GET
+    path: /
+  allow_all: true

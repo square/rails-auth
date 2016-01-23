@@ -1,0 +1,18 @@
+AllCops:
+  DisplayCopNames: true
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Metrics/ParameterLists:
+  Max: 5
+  CountKeywordArgs: false
+
+Metrics/LineLength:
+  Max: 128
+
+Metrics/MethodLength:
+  Max: 25
+
+Metrics/AbcSize:
+  Max: 20
