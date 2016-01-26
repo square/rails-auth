@@ -1,5 +1,5 @@
-Serious about security
-======================
+Break me and win a prize!
+=========================
 
 Square recognizes the important contributions the security research community
 can make. We therefore encourage reporting security issues with the code
