@@ -1,4 +1,10 @@
-# Rails::Auth
+Rails::Auth
+===========
+[![Gem Version](https://badge.fury.io/rb/rails-auth.svg)](http://rubygems.org/gems/rails-auth)
+[![Build Status](https://travis-ci.org/square/rails-auth.svg?branch=master)](https://travis-ci.org/square/rails-auth)
+[![Code Climate](https://codeclimate.com/github/square/rails-auth/badges/gpa.svg)](https://codeclimate.com/github/square/rails-auth)
+[![Coverage Status](https://coveralls.io/repos/github/square/rails-auth/badge.svg?branch=master)](https://coveralls.io/github/square/rails-auth?branch=master)
+[![Apache 2 licensed](https://img.shields.io/badge/license-Apache2-blue.svg)](https://github.com/square/rails-auth/blob/master/LICENSE)
 
 Modular resource-based authentication and authorization for Rails/Rack
 
