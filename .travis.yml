@@ -9,7 +9,8 @@ rvm:
   - 2.1.8
   - 2.2.4
   - 2.3.0
-  - jruby-9.0.4.0
-
 matrix:
+  include:
+    - rvm: jruby-9.0.4.0
+      env: JRUBY_OPTS="--debug" # for simplecov
   fast_finish: true
