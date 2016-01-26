@@ -35,6 +35,7 @@ RSpec.describe Rails::Auth::X509::Middleware do
       end
     end
 
+    # :nocov:
     describe "Java certificates" do
       let(:example_key) { "javax.servlet.request.X509Certificate" }
       let(:cert_filter) { :java }
@@ -53,6 +54,7 @@ RSpec.describe Rails::Auth::X509::Middleware do
         expect(principal).to be_a Rails::Auth::X509::Principal
       end
     end
+    # :nocov:
   end
 
   describe "require_cert: true" do
