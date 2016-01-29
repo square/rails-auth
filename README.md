@@ -295,7 +295,6 @@ with a static page body if you find that helpful.
 
 To use it, add `Rails::Auth::ErrorPage::Middleware` to your app:
 
-```
 ```ruby
 app = MyRackApp.new
 
