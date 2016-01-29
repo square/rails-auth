@@ -12,6 +12,8 @@ require "rails/auth/acl"
 require "rails/auth/acl/middleware"
 require "rails/auth/acl/resource"
 
+require "rails/auth/error_page/middleware"
+
 require "rails/auth/x509/filter/pem"
 require "rails/auth/x509/filter/java" if defined?(JRUBY_VERSION)
 require "rails/auth/x509/matcher"
