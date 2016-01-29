@@ -283,6 +283,44 @@ The following matchers are available:
 
 * `allow_request`: allows a request with the given Rack environment, and optional principals
 
+### Error Page Middleware
+
+When an authorization error occurs, the `Rails::Auth::NotAuthorizedError`
+exception is raised up the middleware chain. However, it's likely you would
+prefer to show an error page than have an unhandled exception.
+
+You can write your own middleware that catches `Rails::Auth::NotAuthorizedError`
+if you'd like. However, a default one is provided which renders a 403 response
+with a static page body if you find that helpful.
+
+To use it, add `Rails::Auth::ErrorPage::Middleware` to your app:
+
+```
+```ruby
+app = MyRackApp.new
+
+acl = Rails::Auth::ACL.from_yaml(
+  File.read("/path/to/my/acl.yaml")
+  matchers: { allow_x509_subject: Rails::Auth::X509::Matcher }
+)
+
+acl_auth = Rails::Auth::ACL::Middleware.new(app, acl: acl)
+
+x509_auth = Rails::Auth::X509::Middleware.new(
+  acl_auth,
+  ca_file: "/path/to/my/cabundle.pem"
+  cert_filters: { 'X-SSL-Client-Cert' => :pem },
+  require_cert: true
+)
+
+error_page = Rails::Auth::ErrorPage::Middleware.new(
+  x509_auth,
+  page_body: File.read("path/to/403.html")
+)
+
+run error_page
+```
+
 ## Contributing
 
 Any contributors to the master *rails-auth* repository must sign the
