@@ -13,8 +13,8 @@ Modular resource-based authentication and authorization for Rails/Rack
 Rails::Auth is a flexible library designed for both authentication (AuthN) and
 authorization (AuthZ) using Rack Middleware. It splits the AuthN and AuthZ
 steps into separate middleware classes, using AuthN middleware to first verify
-request client identities, or "principals", then authorizing the request
-via separate AuthZ middleware that consumes these principals, e.g. access
+credentials (such as X.509 certificates or cookies), then authorizing the request
+via separate AuthZ middleware that consumes these credentials, e.g. access
 control lists (ACLs).
 
 Rails::Auth can be used to authenticate and authorize end users using browser
@@ -45,7 +45,7 @@ middleware for your app.
 Rails::Auth ships with the following middleware:
 
 * **AuthN**: `Rails::Auth::X509::Middleware`: support for authenticating
-  principals by their SSL/TLS client certificates.
+  clients by their SSL/TLS client certificates.
 * **AuthZ**: `Rails::Auth::ACL::Middleware`: support for authorizing requests
   using Access Control Lists (ACLs).
 
@@ -110,7 +110,7 @@ app = MyRackApp.new
 
 acl = Rails::Auth::ACL.from_yaml(
   File.read("/path/to/my/acl.yaml"),
-  matchers: { allow_claims: MyClaimsPredicate }
+  matchers: { allow_claims: MyClaimsMatcher }
 )
 
 acl_auth = Rails::Auth::ACL::Middleware.new(app, acl: acl)
@@ -133,14 +133,14 @@ object from the ACL definition is passed to the class's `#initialize` method.
 Here is an example of a simple custom predicate matcher:
 
 ```ruby
-class MyClaimsPredicate
+class MyClaimsMatcher
   def initialize(options)
     @options = options
   end
 
   def match(env)
-    claims = Rails::Auth.principals(env)["claims"]
-    return false unless principal
+    claims = Rails::Auth.credentials(env)["claims"]
+    return false unless credential
 
     @options["groups"].any? { |group| claims["groups"].include?(group) }
   end
@@ -229,9 +229,9 @@ certificates:
 cert_filters: { 'X-SSL-Client-Cert' => proc { |pem| OpenSSL::X509::Certificate.new(pem) } }
 ```
 
-When certificates are recognized and verified, an `Rails::Auth::X509::Principal`
-object will be added to the Rack environment under `env["rails-auth.principals"]["x509"]`.
-This middleware will never add any certificate to the environment's principals
+When certificates are recognized and verified, a `Rails::Auth::X509::Certificate`
+object will be added to the Rack environment under `env["rails-auth.credentials"]["x509"]`.
+This middleware will never add any certificate to the environment's credentials
 that hasn't been verified against the configured CA bundle.
 
 ## RSpec integration
@@ -249,7 +249,7 @@ Below is an example of how to write an ACL spec:
 
 ```ruby
 RSpec.describe "example_acl.yml", acl_spec: true do
-  let(:example_principals) { x509_principal_hash(ou: "ponycopter") }
+  let(:example_credentials) { x509_certificate_hash(ou: "ponycopter") }
 
   subject do
     Rails::Auth::ACL.from_yaml(
@@ -259,7 +259,7 @@ RSpec.describe "example_acl.yml", acl_spec: true do
   end
 
   describe "/path/to/resource" do
-    it { is_expected.to     permit get_request(principals: example_principals) }
+    it { is_expected.to     permit get_request(credentials: example_credentials) }
     it { is_expected.not_to permit get_request) }
   end
 end
@@ -267,7 +267,7 @@ end
 
 The following helper methods are available:
 
-* `x509_principal`, `x509_principal_hash`: create instance doubles of Rails::Auth::X509::Principals
+* `x509_certificate`, `x509_certificate_hash`: create instance doubles of Rails::Auth::X509::Certificate
 * Request builders: The following methods build requests from the described path:
   * `get_request`
   * `head_request`
@@ -281,7 +281,7 @@ The following helper methods are available:
 
 The following matchers are available:
 
-* `allow_request`: allows a request with the given Rack environment, and optional principals
+* `allow_request`: allows a request with the given Rack environment, and optional credentials
 
 ### Error Page Middleware
 

@@ -22,16 +22,16 @@ RSpec.describe Rails::Auth::X509::Middleware do
 
   context "certificate types" do
     describe "PEM certificates" do
-      it "extracts Rails::Auth::Principal::X509 from a PEM certificate in the Rack environment" do
+      it "extracts Rails::Auth::X509::Certificate from a PEM certificate in the Rack environment" do
         _response, env = middleware.call(request.merge(example_key => valid_cert_pem))
 
-        principal = Rails::Auth.principals(env).fetch("x509")
-        expect(principal).to be_a Rails::Auth::X509::Principal
+        credential = Rails::Auth.credentials(env).fetch("x509")
+        expect(credential).to be_a Rails::Auth::X509::Certificate
       end
 
       it "ignores unverified certificates" do
         _response, env = middleware.call(request.merge(example_key => bad_cert_pem))
-        expect(Rails::Auth.principals(env)).to be_empty
+        expect(Rails::Auth.credentials(env)).to be_empty
       end
     end
 
@@ -45,13 +45,13 @@ RSpec.describe Rails::Auth::X509::Middleware do
         Java::SunSecurityX509::X509CertImpl.new(ruby_cert.to_der.to_java_bytes)
       end
 
-      it "extracts Rails::Auth::Principal::X509 from a Java::SunSecurityX509::X509CertImpl" do
+      it "extracts Rails::Auth::Credential::X509 from a Java::SunSecurityX509::X509CertImpl" do
         skip "JRuby only" unless defined?(JRUBY_VERSION)
 
         _response, env = middleware.call(request.merge(example_key => java_cert))
 
-        principal = Rails::Auth.principals(env).fetch("x509")
-        expect(principal).to be_a Rails::Auth::X509::Principal
+        credential = Rails::Auth.credentials(env).fetch("x509")
+        expect(credential).to be_a Rails::Auth::X509::Certificate
       end
     end
     # :nocov:
@@ -63,8 +63,8 @@ RSpec.describe Rails::Auth::X509::Middleware do
     it "functions normally for valid certificates" do
       _response, env = middleware.call(request.merge(example_key => valid_cert_pem))
 
-      principal = Rails::Auth.principals(env).fetch("x509")
-      expect(principal).to be_a Rails::Auth::X509::Principal
+      credential = Rails::Auth.credentials(env).fetch("x509")
+      expect(credential).to be_a Rails::Auth::X509::Certificate
     end
 
     it "raises Rails::Auth::X509::CertificateVerifyFailed for unverified certificates" do

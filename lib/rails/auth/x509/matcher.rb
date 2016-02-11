@@ -1,7 +1,7 @@
 module Rails
   module Auth
     module X509
-      # Predicate matcher for making assertions about X.509 principals
+      # Predicate matcher for making assertions about X.509 certificates
       class Matcher
         # @option options [String] cn Common Name of the subject
         # @option options [String] ou Organizational Unit of the subject
@@ -11,10 +11,10 @@ module Rails
 
         # @param [Hash] env Rack environment
         def match(env)
-          principal = Rails::Auth.principals(env)["x509"]
-          return false unless principal
+          certificate = Rails::Auth.credentials(env)["x509"]
+          return false unless certificate
 
-          @options.all? { |name, value| principal[name] == value }
+          @options.all? { |name, value| certificate[name] == value }
         end
       end
     end

@@ -6,8 +6,8 @@ module Rails
       # Raised when certificate verification is mandatory
       CertificateVerifyFailed = Class.new(NotAuthorizedError)
 
-      # Validates X.509 client certificates and adds principal objects for valid
-      # clients to the rack environment as env["rails-auth.principals"]["x509"]
+      # Validates X.509 client certificates and adds credential objects for valid
+      # clients to the rack environment as env["rails-auth.credentials"]["x509"]
       class Middleware
         # Create a new X.509 Middleware object
         #
@@ -36,15 +36,15 @@ module Rails
         end
 
         def call(env)
-          principal = extract_principal(env)
-          Rails::Auth.add_principal(env, "x509".freeze, principal.freeze) if principal
+          credential = extract_credential(env)
+          Rails::Auth.add_credential(env, "x509".freeze, credential.freeze) if credential
 
           @app.call(env)
         end
 
         private
 
-        def extract_principal(env)
+        def extract_credential(env)
           @cert_filters.each do |key, filter|
             raw_cert = env[key]
             next unless raw_cert
@@ -54,7 +54,7 @@ module Rails
 
             if @truststore.verify(cert)
               log("Verified", cert)
-              return Rails::Auth::X509::Principal.new(cert)
+              return Rails::Auth::X509::Certificate.new(cert)
             else
               log("Verify FAILED", cert)
               fail CertificateVerifyFailed, "verify failed: #{subject(cert)}" if @require_cert

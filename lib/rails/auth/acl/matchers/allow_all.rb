@@ -3,7 +3,7 @@ module Rails
     class ACL
       # Built-in predicate matchers
       module Matchers
-        # Allows all principals access to a given resource
+        # Allows unauthenticated clients to access to a given resource
         class AllowAll
           def initialize(enabled)
             fail ArgumentError, "enabled must be true/false" unless [true, false].include?(enabled)
