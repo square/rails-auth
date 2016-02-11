@@ -6,7 +6,7 @@ RSpec.describe Rails::Auth::ACL do
       example_config,
       matchers: {
         allow_x509_subject: Rails::Auth::X509::Matcher,
-        allow_claims:       ClaimsPredicate
+        allow_claims:       ClaimsMatcher
       }
     )
   end

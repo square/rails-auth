@@ -3,8 +3,8 @@
 module Rails
   module Auth
     module X509
-      # HTTPS principal identified by an X.509 client certificate
-      class Principal
+      # X.509 client certificates obtained from HTTP requests
+      class Certificate
         attr_reader :certificate
 
         def initialize(certificate)

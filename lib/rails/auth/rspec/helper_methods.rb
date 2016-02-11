@@ -3,14 +3,14 @@ module Rails
     module RSpec
       # RSpec helper methods
       module HelperMethods
-        # Creates an Rails::Auth::X509::Principal instance double
-        def x509_principal(cn: nil, ou: nil)
+        # Creates an Rails::Auth::X509::Certificate instance double
+        def x509_certificate(cn: nil, ou: nil)
           subject = ""
           subject << "CN=#{cn}" if cn
           subject << "OU=#{ou}" if ou
 
-          instance_double(X509::Principal, subject, cn: cn, ou: ou).tap do |principal|
-            allow(principal).to receive(:[]) do |key|
+          instance_double(Rails::Auth::X509::Certificate, subject, cn: cn, ou: ou).tap do |certificate|
+            allow(certificate).to receive(:[]) do |key|
               {
                 "CN" => cn,
                 "OU" => ou
@@ -19,13 +19,13 @@ module Rails
           end
         end
 
-        # Creates a principals hash containing a single X.509 principal instance double
-        def x509_principal_hash(**args)
-          { "x509" => x509_principal(**args) }
+        # Creates a certificates hash containing a single X.509 certificate instance double
+        def x509_certificate_hash(**args)
+          { "x509" => x509_certificate(**args) }
         end
 
         Rails::Auth::ACL::Resource::HTTP_METHODS.each do |method|
-          define_method("#{method.downcase}_request") do |principals: {}|
+          define_method("#{method.downcase}_request") do |certificates: {}|
             path = self.class.description
 
             # Warn if methods are improperly used
@@ -38,8 +38,8 @@ module Rails
               "REQUEST_PATH"   => self.class.description
             }
 
-            principals.each do |type, value|
-              Rails::Auth.add_principal(env, type.to_s, value)
+            certificates.each do |type, value|
+              Rails::Auth.add_credential(env, type.to_s, value)
             end
 
             env

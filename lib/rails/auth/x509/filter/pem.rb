@@ -2,7 +2,7 @@ module Rails
   module Auth
     module X509
       module Filter
-        # Support for extracting X509::Principals from Privacy Enhanced Mail (PEM) certificates
+        # Extract OpenSSL::X509::Certificates from Privacy Enhanced Mail (PEM) certificates
         class Pem
           def call(pem)
             OpenSSL::X509::Certificate.new(pem).freeze

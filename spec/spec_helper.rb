@@ -5,7 +5,7 @@ $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "rails/auth"
 require "rails/auth/rspec"
 require "support/create_certs"
-require "support/claims_predicate"
+require "support/claims_matcher"
 require "pathname"
 
 RSpec.configure(&:disable_monkey_patching!)

@@ -2,10 +2,10 @@ RSpec.describe Rails::Auth::RSpec::HelperMethods, acl_spec: true do
   let(:example_cn) { "127.0.0.1" }
   let(:example_ou) { "ponycopter" }
 
-  describe "#x509_principal" do
-    subject { x509_principal(cn: example_cn, ou: example_ou) }
+  describe "#x509_certificate" do
+    subject { x509_certificate(cn: example_cn, ou: example_ou) }
 
-    it "creates instance doubles for Rails::Auth::X509::Principals" do
+    it "creates instance doubles for Rails::Auth::X509::Certificates" do
       # Method syntax
       expect(subject.cn).to eq example_cn
       expect(subject.ou).to eq example_ou
@@ -16,10 +16,10 @@ RSpec.describe Rails::Auth::RSpec::HelperMethods, acl_spec: true do
     end
   end
 
-  describe "#x509_principal_hash" do
-    subject { x509_principal_hash(cn: example_cn, ou: example_ou) }
+  describe "#x509_certificate_hash" do
+    subject { x509_certificate_hash(cn: example_cn, ou: example_ou) }
 
-    it "creates a principal hash with an Rails::Auth::X509::Principal double" do
+    it "creates a certificate hash with an Rails::Auth::X509::Certificate double" do
       expect(subject["x509"].cn).to eq example_cn
     end
   end
