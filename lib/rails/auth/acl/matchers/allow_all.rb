@@ -14,9 +14,6 @@ module Rails
             @enabled
           end
         end
-
-        # Make `allow_all` available by default as an ACL matcher
-        ACL::DEFAULT_MATCHERS[:allow_all] = AllowAll
       end
     end
   end
