@@ -1,16 +1,14 @@
+# Pull in default predicate matchers
+require "rails/auth/acl/matchers/allow_all"
+
 module Rails
   module Auth
     # Route-based access control lists
     class ACL
       # Predicate matchers available by default in ACLs
-      # These are added by the individual files in lib/rails/auth/acl/matchers
-      # at the time they're loaded.
-      DEFAULT_MATCHERS = {} # rubocop:disable Style/MutableConstant
-
-      # Pull in default predicate matchers
-      require "rails/auth/acl/matchers/allow_all"
-
-      DEFAULT_MATCHERS.freeze
+      DEFAULT_MATCHERS = {
+        allow_all: Matchers::AllowAll
+      }.freeze
 
       # Create a Rails::Auth::ACL from a YAML representation of an ACL
       #
