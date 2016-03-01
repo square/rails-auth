@@ -89,7 +89,9 @@ Rails::Auth can be used in a complimentary fashion.
   for user authentication. Some of the same caveats as Warden apply,
   however Devise provides a framework for modeling users within a Rails
   app along with common authentication flows, making it somewhat
-  orthogonal to what Rails::Auth provides.
+  orthogonal to what Rails::Auth provides. Rails::Auth is designed to
+  easily support [claims-based identity] systems where user identity
+  is outsourced to a separate microservice.
 
 ### Compliments:
 
@@ -107,6 +109,8 @@ Rails::Auth can be used in a complimentary fashion.
 [Devise]: https://github.com/plataformatec/devise
 [Pundit]: https://github.com/elabs/pundit
 [CanCanCan]: https://github.com/CanCanCommunity/cancancan
+
+[claims-based identity]: https://en.wikipedia.org/wiki/Claims-based_identity
 
 ## Installation
 
