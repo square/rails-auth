@@ -24,8 +24,7 @@ other clients with credentials that have proper authenticating middleware.
 ## Architecture
 
 Rails::Auth makes use of multiple, independent, single-purpose middleware
-classes to handle specific types of AuthN/AuthZ. Specifics and comparisons
-to other frameworks are provided below.
+classes to handle specific types of AuthN/AuthZ.
 
 ### AuthN
 
@@ -76,7 +75,7 @@ of Rails AuthN and AuthZ libraries. These are grouped into two different
 categories: libraries Rails::Auth replaces, and libraries with which 
 Rails::Auth can be used in a complimentary fashion.
 
-## Replaces:
+### Replaces:
 
 * [Warden]: Uses a single "opinionated" Rack middleware providing
   user-centric authentication and methods that allow controllers
@@ -92,7 +91,7 @@ Rails::Auth can be used in a complimentary fashion.
   app along with common authentication flows, making it somewhat
   orthogonal to what Rails::Auth provides.
 
-## Compliments:
+### Compliments:
 
 * [Pundit]: Domain object-centric fine-grained authorization using clean
   object-oriented APIs. Pundit makes authorization decisions around particular
