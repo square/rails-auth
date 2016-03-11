@@ -51,6 +51,34 @@ Rails::Auth ships with the following middleware:
 
 Documentation of these middleware and how to use them is provided below.
 
+
+### Controller Methods
+
+Rails::Auth includes a module of helper methods you can use from Rails
+controllers. Include them like so:
+
+```ruby
+class ApplicationController < ActionController::Base
+  include Rails::Auth::ControllerMethods
+
+  def x509_certificate_ou
+    credentials[:x509].try(:ou)
+  end
+
+  def current_username
+    # Note: Rails::Auth doesn't provide a middleware to extract this, it's
+    # just an example of how you could use it with your own claims-based
+    # identity system.
+    credentials[:identity_claims].try(:username)
+  end
+end
+```
+
+This defines the following methods:
+
+* `#credentials`: obtain a HashWithIndifferentAccess containing all of the
+  credentials that Rails::Auth has extracted using its AuthN middleware.
+
 ### Access Control Lists (ACLs)
 
 ACLs are the main tool Rails::Auth provides for AuthZ. ACLs use a set of
