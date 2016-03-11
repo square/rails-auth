@@ -1,3 +1,10 @@
+### 0.2.0 (2016-03-11)
+
+* [#10](https://github.com/square/rails-auth/pull/10)
+  Add Rails::Auth::ControllerMethods and #credentials method for accessing
+  rails-auth.credentials from a Rails controller.
+  ([@tarcieri])
+
 ### 0.1.0 (2016-02-10)
 
 * [#6](https://github.com/square/rails-auth/pull/6):
