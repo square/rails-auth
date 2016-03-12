@@ -18,11 +18,11 @@ module Rails
         # @param [Hash] :predicates matchers for this resource
         #
         def initialize(options, predicates)
-          fail TypeError, "expected Hash for options"    unless options.is_a?(Hash)
-          fail TypeError, "expected Hash for predicates" unless predicates.is_a?(Hash)
+          raise TypeError, "expected Hash for options"    unless options.is_a?(Hash)
+          raise TypeError, "expected Hash for predicates" unless predicates.is_a?(Hash)
 
           unless (extra_keys = options.keys - VALID_OPTIONS).empty?
-            fail ParseError, "unrecognized key in ACL resource: #{extra_keys.first}"
+            raise ParseError, "unrecognized key in ACL resource: #{extra_keys.first}"
           end
 
           @http_methods = extract_methods(options["method"])
@@ -63,7 +63,7 @@ module Rails
           return nil if methods.include?("ALL")
 
           methods.each do |method|
-            fail ParseError, "invalid HTTP method: #{method}" unless HTTP_METHODS.include?(method)
+            raise ParseError, "invalid HTTP method: #{method}" unless HTTP_METHODS.include?(method)
           end
 
           methods.freeze

@@ -15,7 +15,7 @@ RSpec.describe Rails::Auth::ErrorPage::Middleware do
   end
 
   context "access denied" do
-    let(:app) { ->(_env) { fail(Rails::Auth::NotAuthorizedError, "not authorized!") } }
+    let(:app) { ->(_env) { raise(Rails::Auth::NotAuthorizedError, "not authorized!") } }
 
     it "renders the error page" do
       code, _env, body = middleware.call(request)

@@ -15,14 +15,14 @@ module Rails
         #
         # @return [Rails::Auth::ACL::Middleware] new ACL middleware instance
         def initialize(app, acl: nil)
-          fail ArgumentError, "no acl given" unless acl
+          raise ArgumentError, "no acl given" unless acl
 
           @app = app
           @acl = acl
         end
 
         def call(env)
-          fail NotAuthorizedError, "unauthorized request" unless @acl.match(env)
+          raise NotAuthorizedError, "unauthorized request" unless @acl.match(env)
           @app.call(env)
         end
       end
