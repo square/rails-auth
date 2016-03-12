@@ -25,7 +25,7 @@ module Rails
       def add_credential(env, type, credential)
         credentials = env[CREDENTIALS_ENV_KEY] ||= {}
 
-        fail ArgumentError, "credential #{type} already added to request" if credentials.key?(type)
+        raise ArgumentError, "credential #{type} already added to request" if credentials.key?(type)
         credentials[type] = credential
 
         env

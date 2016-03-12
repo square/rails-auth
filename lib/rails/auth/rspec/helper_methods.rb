@@ -30,7 +30,7 @@ module Rails
 
             # Warn if methods are improperly used
             unless path.chars[0] == "/"
-              fail ArgumentError, "expected #{path} to start with '/'"
+              raise ArgumentError, "expected #{path} to start with '/'"
             end
 
             env = {

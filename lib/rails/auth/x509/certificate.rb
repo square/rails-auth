@@ -9,7 +9,7 @@ module Rails
 
         def initialize(certificate)
           unless certificate.is_a?(OpenSSL::X509::Certificate)
-            fail TypeError, "expecting OpenSSL::X509::Certificate, got #{certificate.class}"
+            raise TypeError, "expecting OpenSSL::X509::Certificate, got #{certificate.class}"
           end
 
           @certificate = certificate.freeze

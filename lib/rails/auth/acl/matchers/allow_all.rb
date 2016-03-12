@@ -6,7 +6,7 @@ module Rails
         # Allows unauthenticated clients to access to a given resource
         class AllowAll
           def initialize(enabled)
-            fail ArgumentError, "enabled must be true/false" unless [true, false].include?(enabled)
+            raise ArgumentError, "enabled must be true/false" unless [true, false].include?(enabled)
             @enabled = enabled
           end
 

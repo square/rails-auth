@@ -19,7 +19,7 @@ module Rails
         #
         # @return [Rails::Auth::X509::Middleware] new X509 middleware instance
         def initialize(app, cert_filters: {}, ca_file: nil, truststore: nil, require_cert: false, logger: nil)
-          fail ArgumentError, "no ca_file given" unless ca_file
+          raise ArgumentError, "no ca_file given" unless ca_file
 
           @app          = app
           @logger       = logger
@@ -57,11 +57,11 @@ module Rails
               return Rails::Auth::X509::Certificate.new(cert)
             else
               log("Verify FAILED", cert)
-              fail CertificateVerifyFailed, "verify failed: #{subject(cert)}" if @require_cert
+              raise CertificateVerifyFailed, "verify failed: #{subject(cert)}" if @require_cert
             end
           end
 
-          fail CertificateVerifyFailed, "no client certificate in request" if @require_cert
+          raise CertificateVerifyFailed, "no client certificate in request" if @require_cert
           nil
         end
 

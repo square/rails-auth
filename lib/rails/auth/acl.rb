@@ -26,7 +26,7 @@ module Rails
 
         acl.each_with_index do |entry|
           resources = entry["resources"]
-          fail ParseError, "no 'resources' key present in entry: #{entry.inspect}" unless resources
+          raise ParseError, "no 'resources' key present in entry: #{entry.inspect}" unless resources
 
           predicates = parse_predicates(entry, matchers.merge(DEFAULT_MATCHERS))
 
@@ -73,8 +73,8 @@ module Rails
           next if name == "resources"
 
           matcher_class = matchers[name.to_sym]
-          fail ArgumentError, "no matcher for #{name}" unless matcher_class
-          fail TypeError, "expected Class for #{name}" unless matcher_class.is_a?(Class)
+          raise ArgumentError, "no matcher for #{name}" unless matcher_class
+          raise TypeError, "expected Class for #{name}" unless matcher_class.is_a?(Class)
 
           predicates[name.freeze] = matcher_class.new(options.freeze).freeze
         end
