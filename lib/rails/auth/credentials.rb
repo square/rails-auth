@@ -27,6 +27,8 @@ module Rails
 
         fail ArgumentError, "credential #{type} already added to request" if credentials.key?(type)
         credentials[type] = credential
+
+        env
       end
     end
 
