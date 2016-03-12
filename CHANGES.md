@@ -1,3 +1,9 @@
+### 0.3.0 (2016-03-12)
+
+* [#12](https://github.com/square/rails-auth/pull/12)
+  Add Rails::Auth::ErrorPage::DebugMiddleware.
+  ([@tarcieri])
+
 ### 0.2.0 (2016-03-11)
 
 * [#10](https://github.com/square/rails-auth/pull/10)
