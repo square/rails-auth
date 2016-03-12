@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Rails::Auth: Access Denied</title>
+  <style>
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      margin: 0;
+    }
+
+    #header {
+      background-color: #ddd;
+      padding: 8px 32px;
+      border-bottom: 2px solid #888;
+    }
+
+    #header h1, #header h2 {
+      margin: 0;
+      font-size: 2em;
+      display: inline-block;
+    }
+
+    #header h2 {
+      color: #880000;
+    }
+
+    #content {
+      padding: 8px 32px;
+    }
+
+    table {
+      border: 1px solid #ddd;
+      border-collapse: collapse;
+    }
+
+    tr:nth-child(odd) {
+       background-color: #eee;
+    }
+
+    td {
+      padding: 6px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    td.label {
+      font-weight: bold;
+      text-align: right;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header">
+    <h1>Rails::Auth:</h1>
+    <h2>Access Denied</h2>
+  </div>
+
+  <div id="content">
+    <div id="row">
+      <p><b>Error:</b> Access to the requested resource is not allowed with your current credentials.</p>
+      <p>Below is information about the request you made and the credentials you sent:</p>
+    </div>
+
+    <div id="row">
+      <h3>Request:</h3>
+
+      <table>
+        <tr>
+          <td class="label">Method</td>
+          <td><%= h(env["REQUEST_METHOD"]) %></td>
+        </tr>
+        <tr>
+          <td class="label">Path</td>
+          <td><%= h(env["REQUEST_PATH"]) %></td>
+        </tr>
+        <tr>
+          <td class="label">Host</td>
+          <td><%= h(env["HTTP_HOST"]) %></td>
+        </tr>
+      </table>
+    </div>
+
+    <div id="row">
+      <h3>Credentials:</h3>
+
+      <% if credentials.empty? %>
+      <p><b>No credentials provided!</b> This is a likely cause of this error.</p>
+      <p>Please retry the request with proper credentials.</p>
+      <% else %>
+      <table>
+        <% credentials.each do |name, credential| %>
+        <tr>
+          <td class="label"><%= h(name) %></td>
+          <td><%= h(format_attributes(credential)) %></td>
+        </tr>
+        <% end %>
+      </table>
+      <% end %>
+    </div>
+
+    <div id="row">
+      <h3>Authorized ACL Entries:</h2>
+      <% if resources.empty? %>
+      <p><b>Error: No matching resources!</b> This is a likely cause of this error.</p>
+      <p>Please check your ACL and make sure there's an entry for this route.</p>
+      <% else %>
+      <p>The following entries in your ACL are authorized to view this paritcular route:</p>
+
+      <table>
+        <% resources.each do |resource| %>
+        <tr>
+          <td class="label"><%= h((resource.http_methods || "ALL").join(" ")) %> <%= h(format_path(resource.path)) %></td>
+          <td>
+            <ul>
+              <% resource.predicates.each do |name, predicate| %>
+              <li><%= h(name) %>: <%= h(format_attributes(predicate)) %></li>
+              <% end %>
+            </ul>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+      <% end %>
+    </div>
+  </div>
+</body>
+</html>

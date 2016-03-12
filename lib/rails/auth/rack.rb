@@ -14,6 +14,7 @@ require "rails/auth/acl/middleware"
 require "rails/auth/acl/resource"
 
 require "rails/auth/error_page/middleware"
+require "rails/auth/error_page/debug_middleware"
 
 require "rails/auth/x509/certificate"
 require "rails/auth/x509/filter/pem"
