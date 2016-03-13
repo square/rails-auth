@@ -9,13 +9,20 @@ RSpec.describe Rails::Auth::X509::Matcher do
     { Rails::Auth::CREDENTIALS_ENV_KEY => { "x509" => example_certificate } }
   end
 
-  it "matches against a valid Rails::Auth::X509::Credential" do
-    matcher = described_class.new(ou: example_ou)
-    expect(matcher.match(example_env)).to eq true
+  describe "#match" do
+    it "matches against a valid Rails::Auth::X509::Credential" do
+      matcher = described_class.new(ou: example_ou)
+      expect(matcher.match(example_env)).to eq true
+    end
+
+    it "doesn't match if the subject mismatches" do
+      matcher = described_class.new(ou: another_ou)
+      expect(matcher.match(example_env)).to eq false
+    end
   end
 
-  it "doesn't match if the subject mismatches" do
-    matcher = described_class.new(ou: another_ou)
-    expect(matcher.match(example_env)).to eq false
+  it "knows its attributes" do
+    matcher = described_class.new(ou: example_ou)
+    expect(matcher.attributes).to eq(ou: example_ou)
   end
 end
