@@ -35,6 +35,16 @@ module Rails
           @subject["OU".freeze]
         end
         alias organizational_unit ou
+
+        # Generates inspectable attributes for debugging
+        #
+        # @return [Hash] hash containing parts of the certificate subject (cn, ou)
+        def attributes
+          {
+            cn: cn,
+            ou: ou
+          }
+        end
       end
     end
   end

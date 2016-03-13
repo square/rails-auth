@@ -24,4 +24,8 @@ RSpec.describe Rails::Auth::X509::Certificate do
   it "knows its #ou" do
     expect(example_certificate.ou).to eq example_ou
   end
+
+  it "knows its attributes" do
+    expect(example_certificate.attributes).to eq(cn: example_cn, ou: example_ou)
+  end
 end

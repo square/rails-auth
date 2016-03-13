@@ -13,6 +13,13 @@ module Rails
           def match(_env)
             @enabled
           end
+
+          # Generates inspectable attributes for debugging
+          #
+          # @return [true, false] is the matcher enabled?
+          def attributes
+            @enabled
+          end
         end
       end
     end
