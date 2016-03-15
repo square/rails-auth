@@ -61,7 +61,7 @@ module Rails
       # @return [Array<Rails::Auth::ACL::Resource>] matching resources
       #
       def matching_resources(env)
-        @resources.find_all { |resource| resource.match_method_and_path(env) }
+        @resources.find_all { |resource| resource.match!(env) }
       end
 
       private
