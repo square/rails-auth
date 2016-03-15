@@ -216,6 +216,9 @@ Resources are defined by the following constraints:
 * **path**: A regular expression to match the path. `\A` and `\z` are added by
   default to the beginning and end of the regex to ensure the entire path and
   not a substring is matched.
+* **host** (optional): a regular expression to match the `Host:` header passed
+  by the client. Useful if your app services traffic for more than one hostname
+  and you'd like to restrict ACLs by host.
 
 Once you've defined an ACL, you'll need to create a corresponding ACL object
 in Ruby and a middleware to authorize requests using that ACL. Add the

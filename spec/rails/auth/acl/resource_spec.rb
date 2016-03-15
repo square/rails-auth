@@ -4,13 +4,6 @@ RSpec.describe Rails::Auth::ACL::Resource do
   let(:example_path)   { "/foobar" }
   let(:another_path)   { "/baz" }
 
-  let(:example_options) do
-    {
-      "method" => example_method,
-      "path"   => example_path
-    }
-  end
-
   let(:example_predicates) { { "example" => double(:predicate, match: predicate_matches) } }
   let(:example_resource)   { described_class.new(example_options, example_predicates) }
   let(:example_env)        { env_for(example_method, example_path) }
@@ -57,49 +50,96 @@ RSpec.describe Rails::Auth::ACL::Resource do
     end
   end
 
-  describe "#match" do
-    context "with matching predicates and method/path" do
-      let(:predicate_matches) { true }
+  context "without a host specified" do
+    let(:example_options) do
+      {
+        "method" => example_method,
+        "path"   => example_path
+      }
+    end
 
-      it "matches against a valid resource" do
-        expect(example_resource.match(example_env)).to eq true
+    describe "#match" do
+      context "with matching predicates and method/path" do
+        let(:predicate_matches) { true }
+
+        it "matches against a valid resource" do
+          expect(example_resource.match(example_env)).to eq true
+        end
+      end
+
+      context "without matching predicates" do
+        let(:predicate_matches) { false }
+
+        it "doesn't match against a valid resource" do
+          expect(example_resource.match(example_env)).to eq false
+        end
+      end
+
+      context "without a method/path match" do
+        let(:predicate_matches) { true }
+
+        it "doesn't match" do
+          env = env_for(another_method, example_path)
+          expect(example_resource.match(env)).to eq false
+        end
       end
     end
 
-    context "without matching predicates" do
+    describe "#match!" do
       let(:predicate_matches) { false }
 
-      it "doesn't match against a valid resource" do
-        expect(example_resource.match(example_env)).to eq false
+      it "matches against all methods if specified" do
+        resource = described_class.new(example_options.merge("method" => "ALL"), example_predicates)
+        expect(resource.match!(example_env)).to eq true
       end
-    end
 
-    context "without a method/path match" do
-      let(:predicate_matches) { true }
-
-      it "doesn't match" do
+      it "doesn't match if the method mismatches" do
         env = env_for(another_method, example_path)
-        expect(example_resource.match(env)).to eq false
+        expect(example_resource.match!(env)).to eq false
+      end
+
+      it "doesn't match if the path mismatches" do
+        env = env_for(example_method, another_path)
+        expect(example_resource.match!(env)).to eq false
       end
     end
   end
 
-  describe "#match_method_and_path" do
-    let(:predicate_matches) { false }
+  context "with a host specified" do
+    let(:example_host) { "www.example.com" }
+    let(:bogus_host)   { "www.trololol.com" }
+    let(:predicate_matches) { true }
 
-    it "matches against all methods if specified" do
-      resource = described_class.new(example_options.merge("method" => "ALL"), example_predicates)
-      expect(resource.match_method_and_path(example_env)).to eq true
+    let(:example_options) do
+      {
+        "method" => example_method,
+        "path"   => example_path,
+        "host"   => example_host
+      }
     end
 
-    it "doesn't match if the method mismatches" do
-      env = env_for(another_method, example_path)
-      expect(example_resource.match_method_and_path(env)).to eq false
+    describe "#match" do
+      it "matches if the host matches" do
+        example_env["HTTP_HOST"] = example_host
+        expect(example_resource.match(example_env)).to eq true
+      end
+
+      it "doesn't match if the host mismatches" do
+        example_env["HTTP_HOST"] = bogus_host
+        expect(example_resource.match(example_env)).to eq false
+      end
     end
 
-    it "doesn't match if the path mismatches" do
-      env = env_for(example_method, another_path)
-      expect(example_resource.match_method_and_path(env)).to eq false
+    describe "#match!" do
+      it "matches if the host matches" do
+        example_env["HTTP_HOST"] = example_host
+        expect(example_resource.match(example_env)).to eq true
+      end
+
+      it "doesn't match if the host mismatches" do
+        example_env["HTTP_HOST"] = bogus_host
+        expect(example_resource.match(example_env)).to eq false
+      end
     end
   end
 end
