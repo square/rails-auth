@@ -1,3 +1,13 @@
+### 0.4.0 (2016-03-14)
+
+* [#14](https://github.com/square/rails-auth/pull/14)
+  Support for optionally matching hostnames in ACL resources.
+  ([@tarcieri])
+
+* [#13](https://github.com/square/rails-auth/pull/13)
+  Add #attributes method to matchers and X.509 certs.
+  ([@tarcieri])
+
 ### 0.3.0 (2016-03-12)
 
 * [#12](https://github.com/square/rails-auth/pull/12)
