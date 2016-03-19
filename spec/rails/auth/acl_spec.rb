@@ -11,6 +11,12 @@ RSpec.describe Rails::Auth::ACL do
     )
   end
 
+  describe "#initialize" do
+    it "raises TypeError if given a non-Array ACL type" do
+      expect { described_class.new(:bogus) }.to raise_error(TypeError)
+    end
+  end
+
   describe "#match" do
     it "matches routes against the ACL" do
       expect(example_acl.match(env_for(:get, "/"))).to eq true
