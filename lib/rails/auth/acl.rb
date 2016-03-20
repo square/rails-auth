@@ -22,9 +22,13 @@ module Rails
       # @param [Hash] :matchers predicate matchers for use with this ACL
       #
       def initialize(acl, matchers: {})
+        raise TypeError, "expected Array for acl, got #{acl.class}" unless acl.is_a?(Array)
+
         @resources = []
 
-        acl.each_with_index do |entry|
+        acl.each do |entry|
+          raise TypeError, "expected Hash for acl entry, got #{entry.class}" unless entry.is_a?(Hash)
+
           resources = entry["resources"]
           raise ParseError, "no 'resources' key present in entry: #{entry.inspect}" unless resources
 
