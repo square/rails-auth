@@ -73,7 +73,7 @@ policies around them.
 Below is a comparison of how Rails::Auth relates to the existing landscape
 of Rails AuthN and AuthZ libraries. These are grouped into two different
 categories: libraries Rails::Auth replaces, and libraries with which 
-Rails::Auth can be used in a complimentary fashion.
+Rails::Auth can be used in a complementary fashion.
 
 ### Replaces:
 
@@ -93,7 +93,7 @@ Rails::Auth can be used in a complimentary fashion.
   easily support [claims-based identity] systems where user identity
   is outsourced to a separate microservice.
 
-### Compliments:
+### Complements:
 
 * [Pundit]: Domain object-centric fine-grained authorization using clean
   object-oriented APIs. Pundit makes authorization decisions around particular
