@@ -18,9 +18,10 @@ def fixture_path(*args)
   Pathname.new(File.expand_path("../fixtures", __FILE__)).join(*args)
 end
 
-def env_for(method, path)
+def env_for(method, path, host = "127.0.0.1")
   {
     "REQUEST_METHOD" => method.to_s.upcase,
-    "REQUEST_PATH"   => path
+    "PATH_INFO"      => path,
+    "HTTP_HOST"      => host
   }
 end

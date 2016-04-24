@@ -58,7 +58,7 @@ module Rails
         #
         def match!(env)
           return false unless @http_methods.nil? || @http_methods.include?(env["REQUEST_METHOD".freeze])
-          return false unless @path =~ env["REQUEST_PATH".freeze]
+          return false unless @path =~ env["PATH_INFO".freeze]
           return false unless @host.nil? || @host =~ env["HTTP_HOST".freeze]
           true
         end

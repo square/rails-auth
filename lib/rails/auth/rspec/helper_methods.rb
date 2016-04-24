@@ -35,7 +35,7 @@ module Rails
 
             env = {
               "REQUEST_METHOD" => method,
-              "REQUEST_PATH"   => self.class.description
+              "PATH_INFO"      => self.class.description
             }
 
             certificates.each do |type, value|
