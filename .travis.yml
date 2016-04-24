@@ -1,16 +1,21 @@
 language: ruby
 sudo: false
+branches:
+  only:
+    - master
 
 before_install:
   - gem install bundler
 
+bundler_args: --without development
+
 rvm:
   - 2.0.0
-  - 2.1.8
+  - 2.1.10
   - 2.2.4
   - 2.3.0
 matrix:
   include:
-    - rvm: jruby-9.0.4.0
+    - rvm: jruby-9.0.5.0
       env: JRUBY_OPTS="--debug" # for simplecov
   fast_finish: true
