@@ -4,7 +4,8 @@ group :development do
   gem "guard-rspec"
 end
 
-group :test do
+group :development, :test do
+  gem "rake"
   gem "rspec"
   gem "rubocop", "0.38.0"
   gem "coveralls", require: false
