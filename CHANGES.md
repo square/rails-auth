@@ -1,3 +1,9 @@
+### 0.5.0 (2016-04-24)
+
+* [#19](https://github.com/square/rails-auth/pull/19)
+  Add Rails::Auth::Credentials::InjectorMiddleware.
+  ([@tarcieri])
+
 ### 0.4.1 (2016-04-23)
 
 * [#17](https://github.com/square/rails-auth/pull/17)
