@@ -1,3 +1,13 @@
+### 0.4.1 (2016-04-23)
+
+* [#17](https://github.com/square/rails-auth/pull/17)
+  Use PATH_INFO instead of REQUEST_PATH.
+  ([@tarcieri])
+
+* [#15](https://github.com/square/rails-auth/pull/15)
+  Check types more thoroughly when parsing ACLs.
+  ([@tarcieri])
+
 ### 0.4.0 (2016-03-14)
 
 * [#14](https://github.com/square/rails-auth/pull/14)
