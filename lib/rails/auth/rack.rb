@@ -6,12 +6,14 @@ require "openssl"
 
 require "rails/auth/version"
 
-require "rails/auth/credentials"
 require "rails/auth/exceptions"
 
 require "rails/auth/acl"
 require "rails/auth/acl/middleware"
 require "rails/auth/acl/resource"
+
+require "rails/auth/credentials"
+require "rails/auth/credentials/injector_middleware"
 
 require "rails/auth/error_page/middleware"
 require "rails/auth/error_page/debug_middleware"

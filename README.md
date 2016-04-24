@@ -353,55 +353,6 @@ object will be added to the Rack environment under `env["rails-auth.credentials"
 This middleware will never add any certificate to the environment's credentials
 that hasn't been verified against the configured CA bundle.
 
-## RSpec integration
-
-Rails::Auth includes built-in matchers that allow you to write tests for your
-ACLs to ensure they have the behavior you expect.
-
-To enable RSpec support, require the following:
-
-```ruby
-require "rails/auth/rspec"
-```
-
-Below is an example of how to write an ACL spec:
-
-```ruby
-RSpec.describe "example_acl.yml", acl_spec: true do
-  let(:example_credentials) { x509_certificate_hash(ou: "ponycopter") }
-
-  subject do
-    Rails::Auth::ACL.from_yaml(
-      File.read("/path/to/example_acl.yml"),
-      matchers: { allow_x509_subject: Rails::Auth::X509::Matcher }
-    )
-  end
-
-  describe "/path/to/resource" do
-    it { is_expected.to     permit get_request(credentials: example_credentials) }
-    it { is_expected.not_to permit get_request) }
-  end
-end
-```
-
-The following helper methods are available:
-
-* `x509_certificate`, `x509_certificate_hash`: create instance doubles of Rails::Auth::X509::Certificate
-* Request builders: The following methods build requests from the described path:
-  * `get_request`
-  * `head_request`
-  * `put_request`
-  * `post_request`
-  * `delete_request`
-  * `options_request`
-  * `path_request`
-  * `link_request`
-  * `unlink_request`
-
-The following matchers are available:
-
-* `allow_request`: allows a request with the given Rack environment, and optional credentials
-
 ### Error Page Middleware
 
 When an authorization error occurs, the `Rails::Auth::NotAuthorizedError`
@@ -474,6 +425,102 @@ error_page = Rails::Auth::ErrorPage::Middleware.new(
 
 run error_page
 ```
+
+## Testing Support
+
+### RSpec integration
+
+Rails::Auth includes built-in matchers that allow you to write tests for your
+ACLs to ensure they have the behavior you expect.
+
+To enable RSpec support, require the following:
+
+```ruby
+require "rails/auth/rspec"
+```
+
+Below is an example of how to write an ACL spec:
+
+```ruby
+RSpec.describe "example_acl.yml", acl_spec: true do
+  let(:example_credentials) { x509_certificate_hash(ou: "ponycopter") }
+
+  subject do
+    Rails::Auth::ACL.from_yaml(
+      File.read("/path/to/example_acl.yml"),
+      matchers: { allow_x509_subject: Rails::Auth::X509::Matcher }
+    )
+  end
+
+  describe "/path/to/resource" do
+    it { is_expected.to     permit get_request(credentials: example_credentials) }
+    it { is_expected.not_to permit get_request) }
+  end
+end
+```
+
+The following helper methods are available:
+
+* `x509_certificate`, `x509_certificate_hash`: create instance doubles of Rails::Auth::X509::Certificate
+* Request builders: The following methods build requests from the described path:
+  * `get_request`
+  * `head_request`
+  * `put_request`
+  * `post_request`
+  * `delete_request`
+  * `options_request`
+  * `path_request`
+  * `link_request`
+  * `unlink_request`
+
+The following matchers are available:
+
+* `allow_request`: allows a request with the given Rack environment, and optional credentials
+
+### Credential Injector Middleware
+
+`Rails::Auth::Credentials::InjectorMiddleware` allows you to arbitrarily override
+the credentials in the Rack environment. This is useful for development and testing
+purposes when you'd like to simulate certain credentials being in place without
+e.g. actually configuring unique X.509 certificates for each scenario.
+
+Below is an example of how you might configure Rails' `config/environments/development.rb`
+and `config/environments/test.rb` files to use the middleware:
+
+#### config/environments/development.rb example
+
+```ruby
+Rails.application.configure do
+  # Settings specified here will take precedence over those in config/application.rb.
+  [...]
+
+  # Simulate being "joeadmin" when used in development
+  config.middleware.insert_before Rails::Auth::ACL::Middleware,
+    Rails::Auth::Credentials::InjectorMiddleware,
+    "user_token" => MyCredential.new(
+      username:  "joeadmin",
+      claims:    %w(admins),
+    )
+end
+```
+
+#### config/environments/test.rb example
+
+```ruby
+Rails.application.configure do
+  # Settings specified here will take precedence over those in config/application.rb.
+  [...]
+
+  # Support configurable test credentials for simulating various scenarios in tests
+  config.x.test.credentials = {}
+  config.middleware.insert_before Rails::Auth::ACL::Middleware,
+    Rails::Auth::Credentials::InjectorMiddleware,
+    config.x.test.credentials
+end
+```
+
+Now in your tests, you can change `Rails.configuration.x.test.credentials` and it
+will be injected into the Rack environment.
 
 ## Contributing
 
