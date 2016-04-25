@@ -46,10 +46,7 @@ module Rails
 
         def extract_credential(env)
           @cert_filters.each do |key, filter|
-            raw_cert = env[key]
-            next unless raw_cert
-
-            cert = filter.call(raw_cert)
+            cert = extract_certificate_with_filter(filter, env[key])
             next unless cert
 
             if @truststore.verify(cert)
@@ -62,6 +59,18 @@ module Rails
           end
 
           raise CertificateVerifyFailed, "no client certificate in request" if @require_cert
+          nil
+        end
+
+        def extract_certificate_with_filter(filter, raw_cert)
+          case raw_cert
+          when String   then return if raw_cert.empty?
+          when NilClass then return
+          end
+
+          filter.call(raw_cert)
+        rescue => ex
+          @logger.debug("rails-auth: Certificate error: #{ex.class}: #{ex.message}") if @logger
           nil
         end
 
