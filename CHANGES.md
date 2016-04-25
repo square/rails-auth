@@ -1,3 +1,9 @@
+### 0.5.1 (2016-04-24)
+
+* [#20](https://github.com/square/rails-auth/pull/20)
+  Handle X5.09 filter exceptions.
+  ([@tarcieri])
+
 ### 0.5.0 (2016-04-24)
 
 * [#19](https://github.com/square/rails-auth/pull/19)
