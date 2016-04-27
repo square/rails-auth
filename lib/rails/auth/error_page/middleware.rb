@@ -13,7 +13,7 @@ module Rails
         def call(env)
           @app.call(env)
         rescue Rails::Auth::NotAuthorizedError
-          [403, {}, [@page_body]]
+          [403, { "Content-Type" => "text/html" }, [@page_body]]
         end
       end
     end
