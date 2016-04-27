@@ -14,6 +14,7 @@ module Rails
         # This is just in case someone pulls off reflective XSS, but hopefully all values are
         # properly escaped on the page so that won't happen.
         RESPONSE_HEADERS = {
+          "Content-Type" => "text/html",
           "Content-Security-Policy" =>
           "default-src 'self'; " \
           "script-src 'none'; " \
