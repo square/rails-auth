@@ -1,3 +1,9 @@
+### 0.5.2 (2016-04-27)
+
+* [#21](https://github.com/square/rails-auth/pull/21)
+  Send correct Content-Type on ErrorPage middleware.
+  ([@tarcieri])
+
 ### 0.5.1 (2016-04-24)
 
 * [#20](https://github.com/square/rails-auth/pull/20)
