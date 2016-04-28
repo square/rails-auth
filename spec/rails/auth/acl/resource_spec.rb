@@ -30,7 +30,7 @@ RSpec.describe Rails::Auth::ACL::Resource do
         {}
       )
 
-      expect(resource.http_methods).to eq nil
+      expect(resource.http_methods).to eq Rails::Auth::ACL::Resource::HTTP_METHODS
     end
 
     context "errors" do

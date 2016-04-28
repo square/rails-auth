@@ -57,7 +57,7 @@ module Rails
         # @return [Boolean] method and path *only* match the given environment
         #
         def match!(env)
-          return false unless @http_methods.nil? || @http_methods.include?(env["REQUEST_METHOD".freeze])
+          return false unless @http_methods.include?(env["REQUEST_METHOD".freeze])
           return false unless @path =~ env["PATH_INFO".freeze]
           return false unless @host.nil? || @host =~ env["HTTP_HOST".freeze]
           true
@@ -68,7 +68,8 @@ module Rails
         def extract_methods(methods)
           methods = Array(methods)
 
-          return nil if methods.include?("ALL")
+          return HTTP_METHODS if methods == ["ALL"]
+          raise ParseError, "method 'ALL' cannot be used with other methods" if methods.include?("ALL")
 
           methods.each do |method|
             raise ParseError, "invalid HTTP method: #{method}" unless HTTP_METHODS.include?(method)
