@@ -1,3 +1,9 @@
+### 0.5.3 (2016-04-28)
+
+* [#22](https://github.com/square/rails-auth/pull/22)
+  Use explicit HTTP_METHODS whitelist when 'ALL' method is used.
+  ([@tarcieri])
+
 ### 0.5.2 (2016-04-27)
 
 * [#21](https://github.com/square/rails-auth/pull/21)
