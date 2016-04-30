@@ -30,8 +30,11 @@ module Rails
           @cert_filters.each do |key, filter|
             next unless filter.is_a?(Symbol)
 
+            # Convert snake_case to CamelCase
+            filter_name = filter.to_s.split("_").map(&:capitalize).join
+
             # Shortcut syntax for symbols
-            @cert_filters[key] = Rails::Auth::X509::Filter.const_get(filter.to_s.capitalize).new
+            @cert_filters[key] = Rails::Auth::X509::Filter.const_get(filter_name).new
           end
         end
 
