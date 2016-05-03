@@ -1,3 +1,7 @@
+### 1.0.0 (2016-05-03)
+
+* Initial 1.0 release!
+
 ### 0.5.3 (2016-04-28)
 
 * [#22](https://github.com/square/rails-auth/pull/22)
