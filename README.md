@@ -448,12 +448,12 @@ RSpec.describe "example_acl.yml", acl_spec: true do
   subject do
     Rails::Auth::ACL.from_yaml(
       File.read("/path/to/example_acl.yml"),
-      matchers: { allow_x509_subject: Rails::Auth::X509::Matcher }
+      matchers: { allow_x509_subject: Rails::Auth::X509::Matcher } # add your custom matchers too
     )
   end
 
   describe "/path/to/resource" do
-    it { is_expected.to     permit get_request(credentials: example_credentials) }
+    it { is_expected.to     permit get_request(certificates: example_credentials) }
     it { is_expected.not_to permit get_request) }
   end
 end
