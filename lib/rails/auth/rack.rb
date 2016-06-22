@@ -8,6 +8,8 @@ require "rails/auth/version"
 
 require "rails/auth/exceptions"
 
+require "rails/auth/override"
+
 require "rails/auth/acl"
 require "rails/auth/acl/middleware"
 require "rails/auth/acl/resource"
