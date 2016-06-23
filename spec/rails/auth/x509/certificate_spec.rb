@@ -28,4 +28,11 @@ RSpec.describe Rails::Auth::X509::Certificate do
   it "knows its attributes" do
     expect(example_certificate.attributes).to eq(cn: example_cn, ou: example_ou)
   end
+
+  it "compares certificate objects by comparing their certificates" do
+    second_cert = OpenSSL::X509::Certificate.new(cert_path("valid.crt").read)
+    second_certificate = described_class.new(second_cert)
+
+    expect(example_certificate).to be_eql second_certificate
+  end
 end

@@ -25,7 +25,14 @@ module Rails
       def add_credential(env, type, credential)
         credentials = env[CREDENTIALS_ENV_KEY] ||= {}
 
+        # Adding a credential is idempotent, so attempting to reregister
+        # the same credential should be harmless
+        return env if credentials.key?(type) && credentials[type] == credential
+
+        # raise if we already have a cred, but it didn't short-circuit as
+        # being == to the one supplied
         raise ArgumentError, "credential #{type} already added to request" if credentials.key?(type)
+
         credentials[type] = credential
 
         env

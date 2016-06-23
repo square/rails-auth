@@ -45,6 +45,14 @@ module Rails
             ou: ou
           }
         end
+
+        # Compare ourself to another object by ensuring that it has the same type
+        # and that its certificate pem is the same as ours
+        def ==(other)
+          other.is_a?(self.class) && other.certificate.to_der == certificate.to_der
+        end
+
+        alias eql? ==
       end
     end
   end
