@@ -21,4 +21,24 @@ RSpec.describe Rails::Auth::ACL::Middleware do
       expect { expect(middleware.call(request)) }.to raise_error(Rails::Auth::NotAuthorizedError)
     end
   end
+
+  context "externally authorized requests" do
+    let(:authorized) { false }
+    let(:external_middleware) do
+      Class.new do
+        def initialize(app)
+          @app = app
+        end
+
+        def call(env)
+          Rails::Auth.authorized!(env)
+          @app.call(env)
+        end
+      end
+    end
+
+    it "allows externally authorized requests" do
+      expect(external_middleware.new(middleware).call(request)[0]).to eq 200
+    end
+  end
 end
