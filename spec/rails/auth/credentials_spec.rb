@@ -25,12 +25,28 @@ RSpec.describe Rails::Auth::Credentials do
       expect(Rails::Auth.credentials(example_env)[example_type]).to eq example_credential
     end
 
-    it "raises ArgumentError if the same type of credential is added twice" do
-      Rails::Auth.add_credential(example_env, example_type, example_credential)
+    context "when called twice for the same credential type" do
+      let(:second_credential) { double(:credential2) }
 
-      expect do
+      it "succeeds if the credentials are the same" do
+        allow(example_credential).to receive(:==).and_return(true)
+
         Rails::Auth.add_credential(example_env, example_type, example_credential)
-      end.to raise_error(ArgumentError)
+
+        expect do
+          Rails::Auth.add_credential(example_env, example_type, second_credential)
+        end.to_not raise_error
+      end
+
+      it "raises ArgumentError if the credentials are different" do
+        allow(example_credential).to receive(:==).and_return(false)
+
+        Rails::Auth.add_credential(example_env, example_type, example_credential)
+
+        expect do
+          Rails::Auth.add_credential(example_env, example_type, second_credential)
+        end.to raise_error(ArgumentError)
+      end
     end
   end
 end
