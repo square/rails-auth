@@ -1,3 +1,13 @@
+### 1.1.0 (2016-06-23)
+
+* [#26](https://github.com/square/rails-auth/pull/26)
+  Make add_credential idempotent.
+  ([@ewr])
+
+* [#25](https://github.com/square/rails-auth/pull/25)
+  Allow outside middleware to mark a request as authorized.
+  ([@ewr])
+
 ### 1.0.0 (2016-05-03)
 
 * Initial 1.0 release!
@@ -82,3 +92,4 @@
 
 
 [@tarcieri]: https://github.com/tarcieri
+[@ewr]: https://github.com/ewr
