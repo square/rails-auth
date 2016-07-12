@@ -48,7 +48,7 @@ RSpec.describe Rails::Auth::X509::Middleware do
       it "extracts Rails::Auth::Credential::X509 from a Java::SunSecurityX509::X509CertImpl" do
         skip "JRuby only" unless defined?(JRUBY_VERSION)
 
-        _response, env = middleware.call(request.merge(example_key => java_cert))
+        _response, env = middleware.call(request.merge(example_key => [java_cert]))
 
         credential = Rails::Auth.credentials(env).fetch("x509")
         expect(credential).to be_a Rails::Auth::X509::Certificate
