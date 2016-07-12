@@ -5,6 +5,8 @@ module Rails
   module Auth
     # Route-based access control lists
     class ACL
+      attr_reader :resources
+
       # Predicate matchers available by default in ACLs
       DEFAULT_MATCHERS = {
         allow_all: Matchers::AllowAll
