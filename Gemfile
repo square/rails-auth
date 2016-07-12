@@ -5,6 +5,10 @@ group :development do
 end
 
 group :development, :test do
+  # Workaround for: https://github.com/bundler/bundler/pull/4650
+  gem "rack", "~> 1.x"
+  gem "activesupport", "~> 4"
+
   gem "rake"
   gem "rspec"
   gem "rubocop", "0.38.0"
