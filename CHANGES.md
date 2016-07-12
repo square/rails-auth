@@ -1,3 +1,13 @@
+### 1.2.0 (2016-07-11)
+
+* [#28](https://github.com/square/rails-auth/pull/28)
+  Add a attr_reader for Rails::Auth::ACL#resources.
+  ([@tarcieri])
+
+* [#27](https://github.com/square/rails-auth/pull/27)
+  Handle javax.servlet.request.X509Certificate arrays.
+  ([@tarcieri])
+
 ### 1.1.0 (2016-06-23)
 
 * [#26](https://github.com/square/rails-auth/pull/26)
