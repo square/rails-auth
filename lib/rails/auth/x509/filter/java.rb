@@ -7,8 +7,9 @@ module Rails
       module Filter
         # Extract OpenSSL::X509::Certificates from Java's sun.security.x509.X509CertImpl
         class Java
-          def call(cert)
-            OpenSSL::X509::Certificate.new(extract_der(cert)).freeze
+          def call(certs)
+            return unless certs
+            OpenSSL::X509::Certificate.new(extract_der(certs[0])).freeze
           end
 
           private
