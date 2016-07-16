@@ -14,7 +14,7 @@ RSpec.describe Rails::Auth::RSpec::HelperMethods, acl_spec: true do
   end
 
   describe "#with_credentials" do
-    let(:example_credential_type)  { "x509" }
+    let(:example_credential_type)  { :x509 }
     let(:example_credential_value) { x509_certificate(cn: example_cn, ou: example_ou) }
 
     it "sets credentials in the Rails config" do

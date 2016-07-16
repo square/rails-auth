@@ -13,7 +13,10 @@ module Rails
         def with_credentials(credentials = {})
           raise TypeError, "expected Hash of credentials, got #{credentials.class}" unless credentials.is_a?(Hash)
           test_credentials.clear
-          test_credentials.merge!(credentials)
+
+          credentials.each do |type, value|
+            test_credentials[type.to_s] = value
+          end
         ensure
           test_credentials.clear
         end
