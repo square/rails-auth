@@ -5,7 +5,7 @@ module Rails
       extend self
 
       # Application-level configuration (i.e. config/application.rb)
-      def application(config, acl_file: Rails.root.join("config/acl.yaml"), matchers: ACL::DEFAULT_MATCHERS)
+      def application(config, acl_file: Rails.root.join("config/acl.yaml"), matchers: {})
         config.x.rails_auth.acl = Rails::Auth::ACL.from_yaml(
           File.read(acl_file.to_s),
           matchers: matchers
