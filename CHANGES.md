@@ -1,3 +1,9 @@
+### 1.3.0 (2016-07-16)
+
+* [#30](https://github.com/square/rails-auth/pull/30)
+  Render JSON error responses from Rails::Auth::ErrorPage.
+  ([@tarcieri])
+
 ### 1.2.0 (2016-07-11)
 
 * [#28](https://github.com/square/rails-auth/pull/28)
