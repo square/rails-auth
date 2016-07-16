@@ -3,6 +3,21 @@ module Rails
     module RSpec
       # RSpec helper methods
       module HelperMethods
+        # Credentials to be injected into the request during tests
+        def test_credentials
+          Rails.configuration.x.rails_auth.test_credentials
+        end
+
+        # Perform a test with the given credentials
+        # NOTE: Credentials will be *cleared* after the block. Nesting is not allowed.
+        def with_credentials(credentials = {})
+          raise TypeError, "expected Hash of credentials, got #{credentials.class}" unless credentials.is_a?(Hash)
+          test_credentials.clear
+          test_credentials.merge!(credentials)
+        ensure
+          test_credentials.clear
+        end
+
         # Creates an Rails::Auth::X509::Certificate instance double
         def x509_certificate(cn: nil, ou: nil)
           subject = ""

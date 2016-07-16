@@ -1,6 +1,32 @@
+require "ostruct"
+
 RSpec.describe Rails::Auth::RSpec::HelperMethods, acl_spec: true do
   let(:example_cn) { "127.0.0.1" }
   let(:example_ou) { "ponycopter" }
+
+  before do
+    credentials   = {}
+    rails_auth    = double("config", test_credentials: credentials)
+    x_config      = double("config", rails_auth: rails_auth)
+    configuration = double("config", x: x_config)
+
+    allow(Rails).to receive(:configuration).and_return(configuration)
+  end
+
+  describe "#with_credentials" do
+    let(:example_credential_type)  { "x509" }
+    let(:example_credential_value) { x509_certificate(cn: example_cn, ou: example_ou) }
+
+    it "sets credentials in the Rails config" do
+      expect(test_credentials[example_credential_type]).to be_nil
+
+      with_credentials(example_credential_type => example_credential_value) do
+        expect(test_credentials[example_credential_type]).to be example_credential_value
+      end
+
+      expect(test_credentials[example_credential_type]).to be_nil
+    end
+  end
 
   describe "#x509_certificate" do
     subject { x509_certificate(cn: example_cn, ou: example_ou) }

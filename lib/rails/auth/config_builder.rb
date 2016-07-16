@@ -1,0 +1,76 @@
+module Rails
+  module Auth
+    # Configures Rails::Auth middleware for use in a Rails application
+    module ConfigBuilder
+      extend self
+
+      # Application-level configuration (i.e. config/application.rb)
+      def application(config, acl_file: Rails.root.join("config/acl.yaml"), matchers: ACL::DEFAULT_MATCHERS)
+        config.x.rails_auth.acl = Rails::Auth::ACL.from_yaml(
+          File.read(acl_file.to_s),
+          matchers: matchers
+        )
+
+        config.middleware.use Rails::Auth::ACL::Middleware, acl: config.x.acl
+      end
+
+      # Development configuration (i.e. config/environments/development.rb)
+      def development(config, development_credentials: {}, error_page: :debug)
+        error_page_middleware(config, error_page)
+        credential_injector_middleware(config, development_credentials) unless development_credentials.empty?
+      end
+
+      # Test configuration (i.e. config/environments/test.rb)
+      def test(config)
+        # Simulated credentials to be injected with InjectorMiddleware
+        credential_injector_middleware(config, config.x.rails_auth.test_credentials ||= {})
+      end
+
+      def production(
+        config,
+        cert_filters: nil,
+        require_cert: false,
+        ca_file: nil,
+        error_page: Rails.root.join("public/403.html")
+      )
+        raise ArgumentError, "no cert_filters given but require_cert is true" if require_cert && !cert_filters
+        raise ArgumentError, "no ca_file given but cert_filters were set"     if cert_filters && !ca_file
+
+        error_page_middleware(config, error_page)
+
+        return unless cert_filters
+        config.middleware.insert_before Rails::Auth::ACL::Middleware,
+                                        Rails::Auth::X509::Middleware,
+                                        require_cert: require_cert,
+                                        cert_filters: cert_filters,
+                                        ca_file:      ca_file,
+                                        logger:       Rails.logger
+      end
+
+      private
+
+      # Adds error page middleware to the chain
+      def error_page_middleware(config, error_page)
+        case error_page
+        when :debug
+          config.middleware.insert_before Rails::Auth::ACL::Middleware,
+                                          Rails::Auth::ErrorPage::DebugMiddleware,
+                                          acl: config.x.rails_auth.acl
+        when Pathname, String
+          config.middleware.insert_before Rails::Auth::ACL::Middleware,
+                                          Rails::Auth::ErrorPage::Middleware,
+                                          page_body: Pathname(error_page).read
+        when FalseClass, NilClass
+        else raise TypeError, "bad error page mode: #{mode.inspect}"
+        end
+      end
+
+      # Adds Rails::Auth::Credentials::InjectorMiddleware to the chain with the given credentials
+      def credential_injector_middleware(config, credentials)
+        config.middleware.insert_before Rails::Auth::ACL::Middleware,
+                                        Rails::Auth::Credentials::InjectorMiddleware,
+                                        credentials
+      end
+    end
+  end
+end
