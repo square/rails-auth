@@ -4,6 +4,9 @@ AllCops:
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
+Style/ModuleFunction:
+  Enabled: false
+
 Metrics/ParameterLists:
   Max: 5
   CountKeywordArgs: false

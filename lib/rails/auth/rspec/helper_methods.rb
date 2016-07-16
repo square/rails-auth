@@ -3,6 +3,24 @@ module Rails
     module RSpec
       # RSpec helper methods
       module HelperMethods
+        # Credentials to be injected into the request during tests
+        def test_credentials
+          Rails.configuration.x.rails_auth.test_credentials
+        end
+
+        # Perform a test with the given credentials
+        # NOTE: Credentials will be *cleared* after the block. Nesting is not allowed.
+        def with_credentials(credentials = {})
+          raise TypeError, "expected Hash of credentials, got #{credentials.class}" unless credentials.is_a?(Hash)
+          test_credentials.clear
+
+          credentials.each do |type, value|
+            test_credentials[type.to_s] = value
+          end
+        ensure
+          test_credentials.clear
+        end
+
         # Creates an Rails::Auth::X509::Certificate instance double
         def x509_certificate(cn: nil, ou: nil)
           subject = ""
@@ -25,7 +43,7 @@ module Rails
         end
 
         Rails::Auth::ACL::Resource::HTTP_METHODS.each do |method|
-          define_method("#{method.downcase}_request") do |certificates: {}|
+          define_method("#{method.downcase}_request") do |credentials: {}|
             path = self.class.description
 
             # Warn if methods are improperly used
@@ -38,7 +56,7 @@ module Rails
               "PATH_INFO"      => self.class.description
             }
 
-            certificates.each do |type, value|
+            credentials.each do |type, value|
               Rails::Auth.add_credential(env, type.to_s, value)
             end
 
