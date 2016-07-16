@@ -43,7 +43,7 @@ module Rails
         end
 
         Rails::Auth::ACL::Resource::HTTP_METHODS.each do |method|
-          define_method("#{method.downcase}_request") do |certificates: {}|
+          define_method("#{method.downcase}_request") do |credentials: {}|
             path = self.class.description
 
             # Warn if methods are improperly used
@@ -56,7 +56,7 @@ module Rails
               "PATH_INFO"      => self.class.description
             }
 
-            certificates.each do |type, value|
+            credentials.each do |type, value|
               Rails::Auth.add_credential(env, type.to_s, value)
             end
 

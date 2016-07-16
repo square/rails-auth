@@ -13,8 +13,8 @@ RSpec.describe "RSpec ACL matchers", acl_spec: true do
   end
 
   describe "/baz/quux" do
-    it { is_expected.to permit get_request(certificates: example_certificate) }
-    it { is_expected.not_to permit get_request(certificates: another_certificate) }
+    it { is_expected.to permit get_request(credentials: example_certificate) }
+    it { is_expected.not_to permit get_request(credentials: another_certificate) }
     it { is_expected.not_to permit get_request }
   end
 end
