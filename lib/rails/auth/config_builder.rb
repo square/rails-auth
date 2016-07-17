@@ -31,20 +31,27 @@ module Rails
         cert_filters: nil,
         require_cert: false,
         ca_file: nil,
-        error_page: Rails.root.join("public/403.html")
+        error_page: Rails.root.join("public/403.html"),
+        monitor: nil
       )
         raise ArgumentError, "no cert_filters given but require_cert is true" if require_cert && !cert_filters
         raise ArgumentError, "no ca_file given but cert_filters were set"     if cert_filters && !ca_file
 
         error_page_middleware(config, error_page)
 
-        return unless cert_filters
+        if cert_filters
+          config.middleware.insert_before Rails::Auth::ACL::Middleware,
+                                          Rails::Auth::X509::Middleware,
+                                          require_cert: require_cert,
+                                          cert_filters: cert_filters,
+                                          ca_file:      ca_file,
+                                          logger:       Rails.logger
+        end
+
+        return unless monitor
         config.middleware.insert_before Rails::Auth::ACL::Middleware,
-                                        Rails::Auth::X509::Middleware,
-                                        require_cert: require_cert,
-                                        cert_filters: cert_filters,
-                                        ca_file:      ca_file,
-                                        logger:       Rails.logger
+                                        Rails::Auth::Monitor::Middleware,
+                                        monitor
       end
 
       private

@@ -20,6 +20,8 @@ require "rails/auth/credentials/injector_middleware"
 require "rails/auth/error_page/middleware"
 require "rails/auth/error_page/debug_middleware"
 
+require "rails/auth/monitor/middleware"
+
 require "rails/auth/x509/certificate"
 require "rails/auth/x509/filter/pem"
 require "rails/auth/x509/filter/java" if defined?(JRUBY_VERSION)
