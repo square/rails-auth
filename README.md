@@ -14,14 +14,21 @@ to support [microservice] authentication and [claims-based identity].
 
 ## Description
 
-Rails::Auth is a flexible library designed for both authentication (AuthN) and authorization (AuthZ) using Rack Middleware. It splits the AuthN and AuthZ
-steps into separate middleware classes, using AuthN middleware to first verify credentials (such as X.509 certificates or cookies), then authorizing the request
-via separate AuthZ middleware that consumes these credentials, e.g. access control lists (ACLs).
+Rails::Auth is a flexible library designed for both authentication (AuthN) and authorization (AuthZ) using Rack Middleware.
+It [splits AuthN and AuthZ steps into separate middleware classes][design overview], using AuthN middleware to first verify
+credentials (such as X.509 certificates or cookies), then authorizing the request via separate AuthZ middleware that
+consumes these credentials, e.g. [access control lists] (ACLs).
 
-Rails::Auth can be used to authenticate and authorize end users using browser cookies, service-to-service requests using X.509 client certificates, or any
-other clients with credentials that have proper authenticating middleware.
+Rails::Auth can be used to authenticate and authorize end users using browser cookies, service-to-service requests using
+[X.509 client certificates][X.509], or any other clients with credentials that have proper authenticating middleware.
 
-Despite what the name may lead you to believe, Rails::Auth also works well with other Rack-based frameworks like Sinatra.
+Despite what the name may lead you to believe, Rails::Auth also [works well with other Rack-based frameworks][rack]
+like Sinatra.
+
+[design overview]: https://github.com/square/rails-auth/wiki/Design-Overview
+[access control lists]: https://github.com/square/rails-auth/wiki/Access-Control-Lists
+[X.509]: https://github.com/square/rails-auth/wiki/X.509
+[rack]: https://github.com/square/rails-auth/wiki/Rack-Usage
 
 ## Installation
 
