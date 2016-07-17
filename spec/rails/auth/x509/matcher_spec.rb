@@ -6,7 +6,7 @@ RSpec.describe Rails::Auth::X509::Matcher do
   let(:another_ou) { "somethingelse" }
 
   let(:example_env) do
-    { Rails::Auth::CREDENTIALS_ENV_KEY => { "x509" => example_certificate } }
+    { Rails::Auth::Env::CREDENTIALS_ENV_KEY => { "x509" => example_certificate } }
   end
 
   describe "#match" do
