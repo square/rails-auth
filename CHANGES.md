@@ -1,4 +1,16 @@
-### 2.0.0 (2016-07-16)
+### 2.0.1 (2016-07-16)
+
+* [#36](https://github.com/square/rails-auth/pull/36)
+  Extract Rack environment manipulation into the
+  Rails::Auth::Env class.
+  ([@tarcieri])
+
+* [#35](https://github.com/square/rails-auth/pull/35)
+  Make allowed_by a mandatory argument of
+  Rails::Auth.authorized!
+  ([@tarcieri])
+
+### 2.0.0 (2016-07-16; yanked in favor of 2.0.1)
 
 * [#34](https://github.com/square/rails-auth/pull/34)
   Rails::Auth.allowed_by stores the matcher used to
