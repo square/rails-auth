@@ -6,7 +6,11 @@ Rails::Auth
 [![Coverage Status](https://coveralls.io/repos/github/square/rails-auth/badge.svg?branch=master)](https://coveralls.io/github/square/rails-auth?branch=master)
 [![Apache 2 licensed](https://img.shields.io/badge/license-Apache2-blue.svg)](https://github.com/square/rails-auth/blob/master/LICENSE)
 
-Modular resource-based authentication and authorization for Rails/Rack
+Modular resource-based authentication and authorization for Rails/Rack designed
+to support [microservice] authentication and [claims-based identity].
+
+[microservice]: http://martinfowler.com/articles/microservices.html
+[claims-based identity]: https://en.wikipedia.org/wiki/Claims-based_identity
 
 ## Description
 
