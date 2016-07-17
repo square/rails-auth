@@ -47,6 +47,8 @@ please see this page on the Wiki:
 
 Documentation can be found on the Wiki at: https://github.com/square/rails-auth/wiki
 
+YARD documentation is also available: http://www.rubydoc.info/github/square/rails-auth/master
+
 Please see the following page for how to add Rails::Auth to a Rails app:
 
 [Rails Usage](https://github.com/square/rails-auth/wiki/Rails-Usage)
