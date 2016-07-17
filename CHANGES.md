@@ -1,3 +1,21 @@
+### 2.0.0 (2016-07-16)
+
+* [#34](https://github.com/square/rails-auth/pull/34)
+  Rails::Auth.allowed_by stores the matcher used to
+  authorize the request in the Rack environment.
+  ([@tarcieri])
+
+* [#33](https://github.com/square/rails-auth/pull/33)
+  Rails::Auth::Monitor::Middleware provides callbacks
+  for authorization success/failure for logging or
+  monitoring purposes.
+  ([@tarcieri])
+
+* [#32](https://github.com/square/rails-auth/pull/32)
+  Rails::Auth::ConfigBuilder provides a simplified config
+  API for Rails apps.
+  ([@tarcieri])
+
 ### 1.3.0 (2016-07-16)
 
 * [#30](https://github.com/square/rails-auth/pull/30)
