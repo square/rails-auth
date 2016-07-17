@@ -11,8 +11,10 @@ module Rails
       # @param [Hash] :env Rack environment
       # @param [String] :allowed_by what allowed the request
       #
-      def authorized!(env, allowed_by = nil)
-        Rails::Auth.set_allowed_by(allowed_by) if allowed_by
+      def authorized!(env, allowed_by)
+        raise TypeError, "expected string, got #{allowed_by.class}" unless allowed_by.is_a?(String)
+
+        Rails::Auth.set_allowed_by(env, allowed_by) if allowed_by
         env[AUTHORIZED_ENV_KEY] = true
       end
 
