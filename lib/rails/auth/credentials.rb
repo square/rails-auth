@@ -1,45 +1,30 @@
 # frozen_string_literal: true
 
+require "forwardable"
+
 module Rails
   # Modular resource-based authentication and authorization for Rails/Rack
   module Auth
-    # Rack environment key for all rails-auth credentials
-    CREDENTIALS_ENV_KEY = "rails-auth.credentials".freeze
+    # Stores a set of credentials
+    class Credentials
+      extend Forwardable
 
-    # Functionality for storing credentials in the Rack environment
-    module Credentials
-      # Obtain credentials from a Rack environment
-      #
-      # @param [Hash] :env Rack environment
-      #
-      def credentials(env)
-        env.fetch(CREDENTIALS_ENV_KEY, {})
+      def_delegators :@credentials, :[], :fetch, :empty?, :key?, :to_hash
+
+      def self.from_rack_env(env)
+        new(env.fetch(Rails::Auth::Env::CREDENTIALS_ENV_KEY, {}))
       end
 
-      # Add a credential to the Rack environment
-      #
-      # @param [Hash] :env Rack environment
-      # @param [String] :type credential type to add to the environment
-      # @param [Object] :credential object to add to the environment
-      #
-      def add_credential(env, type, credential)
-        credentials = env[CREDENTIALS_ENV_KEY] ||= {}
+      def initialize(credentials = {})
+        raise TypeError, "expected Hash, got #{credentials.class}" unless credentials.is_a?(Hash)
+        @credentials = credentials
+      end
 
-        # Adding a credential is idempotent, so attempting to reregister
-        # the same credential should be harmless
-        return env if credentials.key?(type) && credentials[type] == credential
-
-        # raise if we already have a cred, but it didn't short-circuit as
-        # being == to the one supplied
-        raise ArgumentError, "credential #{type} already added to request" if credentials.key?(type)
-
-        credentials[type] = credential
-
-        env
+      def []=(type, value)
+        raise TypeError, "expected String for type, got #{type.class}" unless type.is_a?(String)
+        raise AlreadyAuthorizedError, "credential '#{type}' has already been set" if @credentials.key?(type)
+        @credentials[type] = value
       end
     end
-
-    # Include these functions in Rails::Auth for convenience
-    extend Credentials
   end
 end

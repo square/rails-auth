@@ -1,6 +1,6 @@
 module Rails
   module Auth
-    module Credentials
+    class Credentials
       # A middleware for injecting an arbitrary credentials hash into the Rack environment
       # This is intended for development and testing purposes where you would like to
       # simulate a given X.509 certificate being used in a request or user logged in
@@ -11,7 +11,7 @@ module Rails
         end
 
         def call(env)
-          env[Rails::Auth::CREDENTIALS_ENV_KEY] = @credentials
+          env[Rails::Auth::Env::CREDENTIALS_ENV_KEY] = @credentials
           @app.call(env)
         end
       end

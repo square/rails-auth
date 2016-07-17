@@ -6,9 +6,9 @@ require "openssl"
 
 require "rails/auth/version"
 
+require "rails/auth/env"
 require "rails/auth/exceptions"
-require "rails/auth/override"
-require "rails/auth/result"
+require "rails/auth/helpers"
 
 require "rails/auth/acl"
 require "rails/auth/acl/middleware"

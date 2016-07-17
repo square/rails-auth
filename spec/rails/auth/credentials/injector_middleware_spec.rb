@@ -6,6 +6,6 @@ RSpec.describe Rails::Auth::Credentials::InjectorMiddleware do
 
   it "overrides rails-auth credentials in the rack environment" do
     _response, env = middleware.call(request)
-    expect(env[Rails::Auth::CREDENTIALS_ENV_KEY]).to eq credentials
+    expect(env[Rails::Auth::Env::CREDENTIALS_ENV_KEY]).to eq credentials
   end
 end
