@@ -31,7 +31,8 @@ RSpec.describe Rails::Auth::ACL::Middleware do
         end
 
         def call(env)
-          Rails::Auth.authorized!(env)
+          allowed_by = "example"
+          Rails::Auth.authorized!(env, allowed_by)
           @app.call(env)
         end
       end
