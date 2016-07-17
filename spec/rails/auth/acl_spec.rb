@@ -19,9 +19,9 @@ RSpec.describe Rails::Auth::ACL do
 
   describe "#match" do
     it "matches routes against the ACL" do
-      expect(example_acl.match(env_for(:get, "/"))).to eq true
-      expect(example_acl.match(env_for(:get, "/foo/bar/baz"))).to eq true
-      expect(example_acl.match(env_for(:get, "/_admin"))).to eq false
+      expect(example_acl.match(env_for(:get, "/"))).to eq "allow_all"
+      expect(example_acl.match(env_for(:get, "/foo/bar/baz"))).to eq "allow_claims"
+      expect(example_acl.match(env_for(:get, "/_admin"))).to eq nil
     end
   end
 

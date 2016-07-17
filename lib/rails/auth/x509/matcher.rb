@@ -1,7 +1,7 @@
 module Rails
   module Auth
     module X509
-      # Predicate matcher for making assertions about X.509 certificates
+      # Matcher for making assertions about X.509 certificates
       class Matcher
         # @option options [String] cn Common Name of the subject
         # @option options [String] ou Organizational Unit of the subject

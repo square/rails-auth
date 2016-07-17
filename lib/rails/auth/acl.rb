@@ -1,4 +1,4 @@
-# Pull in default predicate matchers
+# Pull in default matchers
 require "rails/auth/acl/matchers/allow_all"
 
 module Rails
@@ -7,7 +7,7 @@ module Rails
     class ACL
       attr_reader :resources
 
-      # Predicate matchers available by default in ACLs
+      # Matchers available by default in ACLs
       DEFAULT_MATCHERS = {
         allow_all: Matchers::AllowAll
       }.freeze
@@ -21,7 +21,7 @@ module Rails
       end
 
       # @param [Array<Hash>] :acl Access Control List configuration
-      # @param [Hash] :matchers predicate matchers for use with this ACL
+      # @param [Hash] :matchers authorizers use with this ACL
       #
       def initialize(acl, matchers: {})
         raise TypeError, "expected Array for acl, got #{acl.class}" unless acl.is_a?(Array)
@@ -34,32 +34,37 @@ module Rails
           resources = entry["resources"]
           raise ParseError, "no 'resources' key present in entry: #{entry.inspect}" unless resources
 
-          predicates = parse_predicates(entry, matchers.merge(DEFAULT_MATCHERS))
+          matcher_instances = parse_matchers(entry, matchers.merge(DEFAULT_MATCHERS))
 
           resources.each do |resource|
-            @resources << Resource.new(resource, predicates).freeze
+            @resources << Resource.new(resource, matcher_instances).freeze
           end
         end
 
         @resources.freeze
       end
 
-      # Match the Rack environment against the ACL, checking all predicates
+      # Match the Rack environment against the ACL, checking all matchers
       #
       # @param [Hash] :env Rack environment
       #
-      # @return [Boolean] is the request authorized?
+      # @return [String, nil] name of the first matching matcher, or nil if unauthorized
       #
       def match(env)
-        @resources.any? { |resource| resource.match(env) }
+        @resources.each do |resource|
+          matcher_name = resource.match(env)
+          return matcher_name if matcher_name
+        end
+
+        nil
       end
 
-      # Find all resources that match the ACL. Predicates are *NOT* checked,
+      # Find all resources that match the ACL. Matchers are *NOT* checked,
       # instead only the initial checks for the "resources" section of the ACL
-      # are performed. Use the `#match` method to validate predicates.
+      # are performed. Use the `#match` method to validate matchers.
       #
       # This method is intended for debugging AuthZ failures. It can find all
-      # resources that match the given request so the corresponding predicates
+      # resources that match the given request so the corresponding matchers
       # can be introspected.
       #
       # @param [Hash] :env Rack environment
@@ -72,8 +77,8 @@ module Rails
 
       private
 
-      def parse_predicates(entry, matchers)
-        predicates = {}
+      def parse_matchers(entry, matchers)
+        matcher_instances = {}
 
         entry.each do |name, options|
           next if name == "resources"
@@ -82,10 +87,10 @@ module Rails
           raise ArgumentError, "no matcher for #{name}" unless matcher_class
           raise TypeError, "expected Class for #{name}" unless matcher_class.is_a?(Class)
 
-          predicates[name.freeze] = matcher_class.new(options.freeze).freeze
+          matcher_instances[name.freeze] = matcher_class.new(options.freeze).freeze
         end
 
-        predicates.freeze
+        matcher_instances.freeze
       end
     end
   end
