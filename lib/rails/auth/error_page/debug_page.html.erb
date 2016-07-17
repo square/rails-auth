@@ -113,8 +113,8 @@
           <td class="label"><%= h((resource.http_methods || "ALL").join(" ")) %> <%= h(format_path(resource.path)) %></td>
           <td>
             <ul>
-              <% resource.predicates.each do |name, predicate| %>
-              <li><%= h(name) %>: <%= h(format_attributes(predicate)) %></li>
+              <% resource.matchers.each do |name, matcher| %>
+              <li><%= h(name) %>: <%= h(format_attributes(matcher)) %></li>
               <% end %>
             </ul>
           </td>

@@ -9,8 +9,10 @@ module Rails
       # Mark a request as externally authorized. Causes ACL checks to be skipped.
       #
       # @param [Hash] :env Rack environment
+      # @param [String] :allowed_by what allowed the request
       #
-      def authorized!(env)
+      def authorized!(env, allowed_by = nil)
+        Rails::Auth.set_allowed_by(allowed_by) if allowed_by
         env[AUTHORIZED_ENV_KEY] = true
       end
 

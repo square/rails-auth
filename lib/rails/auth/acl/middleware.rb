@@ -22,7 +22,12 @@ module Rails
         end
 
         def call(env)
-          raise NotAuthorizedError, "unauthorized request" unless Rails::Auth.authorized?(env) || @acl.match(env)
+          unless Rails::Auth.authorized?(env)
+            matcher_name = @acl.match(env)
+            raise NotAuthorizedError, "unauthorized request" unless matcher_name
+            Rails::Auth.set_allowed_by(env, "matcher:#{matcher_name}")
+          end
+
           @app.call(env)
         end
       end

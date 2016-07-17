@@ -4,8 +4,8 @@ RSpec.describe Rails::Auth::ACL::Resource do
   let(:example_path)   { "/foobar" }
   let(:another_path)   { "/baz" }
 
-  let(:example_predicates) { { "example" => double(:predicate, match: predicate_matches) } }
-  let(:example_resource)   { described_class.new(example_options, example_predicates) }
+  let(:example_matchers) { { "example" => double(:matcher, match: matcher_matches) } }
+  let(:example_resource)   { described_class.new(example_options, example_matchers) }
   let(:example_env)        { env_for(example_method, example_path) }
 
   describe "#initialize" do
@@ -59,37 +59,37 @@ RSpec.describe Rails::Auth::ACL::Resource do
     end
 
     describe "#match" do
-      context "with matching predicates and method/path" do
-        let(:predicate_matches) { true }
+      context "with matching matchers and method/path" do
+        let(:matcher_matches) { true }
 
         it "matches against a valid resource" do
-          expect(example_resource.match(example_env)).to eq true
+          expect(example_resource.match(example_env)).to eq "example"
         end
       end
 
-      context "without matching predicates" do
-        let(:predicate_matches) { false }
+      context "without matching matchers" do
+        let(:matcher_matches) { false }
 
         it "doesn't match against a valid resource" do
-          expect(example_resource.match(example_env)).to eq false
+          expect(example_resource.match(example_env)).to eq nil
         end
       end
 
       context "without a method/path match" do
-        let(:predicate_matches) { true }
+        let(:matcher_matches) { true }
 
         it "doesn't match" do
           env = env_for(another_method, example_path)
-          expect(example_resource.match(env)).to eq false
+          expect(example_resource.match(env)).to eq nil
         end
       end
     end
 
     describe "#match!" do
-      let(:predicate_matches) { false }
+      let(:matcher_matches) { false }
 
       it "matches against all methods if specified" do
-        resource = described_class.new(example_options.merge("method" => "ALL"), example_predicates)
+        resource = described_class.new(example_options.merge("method" => "ALL"), example_matchers)
         expect(resource.match!(example_env)).to eq true
       end
 
@@ -108,7 +108,7 @@ RSpec.describe Rails::Auth::ACL::Resource do
   context "with a host specified" do
     let(:example_host) { "www.example.com" }
     let(:bogus_host)   { "www.trololol.com" }
-    let(:predicate_matches) { true }
+    let(:matcher_matches) { true }
 
     let(:example_options) do
       {
@@ -121,24 +121,24 @@ RSpec.describe Rails::Auth::ACL::Resource do
     describe "#match" do
       it "matches if the host matches" do
         example_env["HTTP_HOST"] = example_host
-        expect(example_resource.match(example_env)).to eq true
+        expect(example_resource.match(example_env)).to eq "example"
       end
 
       it "doesn't match if the host mismatches" do
         example_env["HTTP_HOST"] = bogus_host
-        expect(example_resource.match(example_env)).to eq false
+        expect(example_resource.match(example_env)).to eq nil
       end
     end
 
     describe "#match!" do
       it "matches if the host matches" do
         example_env["HTTP_HOST"] = example_host
-        expect(example_resource.match(example_env)).to eq true
+        expect(example_resource.match(example_env)).to eq "example"
       end
 
       it "doesn't match if the host mismatches" do
         example_env["HTTP_HOST"] = bogus_host
-        expect(example_resource.match(example_env)).to eq false
+        expect(example_resource.match(example_env)).to eq nil
       end
     end
   end

@@ -1,7 +1,7 @@
 module Rails
   module Auth
     class ACL
-      # Built-in predicate matchers
+      # Built-in matchers
       module Matchers
         # Allows unauthenticated clients to access to a given resource
         class AllowAll
