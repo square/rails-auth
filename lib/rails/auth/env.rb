@@ -42,7 +42,7 @@ module Rails
       #
       # @param [String] :allowed_by label of what allowed the request
       def allowed_by=(allowed_by)
-        raise AlreadyAuthorizedError, "already allowed by #{@allowed_by.ispect}" if @allowed_by
+        raise AlreadyAuthorizedError, "already allowed by #{@allowed_by.inspect}" if @allowed_by
         raise TypeError, "expected String for allowed_by, got #{allowed_by.class}" unless allowed_by.is_a?(String)
         @allowed_by = allowed_by
       end
