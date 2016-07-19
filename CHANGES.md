@@ -1,3 +1,10 @@
+### 2.0.2 (2016-07-19)
+
+* [#37](https://github.com/square/rails-auth/pull/37)
+  Forward #each on Rails::Auth::Credentials and make
+  it Enumerable.
+  ([@tarcieri])
+
 ### 2.0.1 (2016-07-16)
 
 * [#36](https://github.com/square/rails-auth/pull/36)
