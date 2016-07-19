@@ -8,8 +8,9 @@ module Rails
     # Stores a set of credentials
     class Credentials
       extend Forwardable
+      include Enumerable
 
-      def_delegators :@credentials, :[], :fetch, :empty?, :key?, :to_hash
+      def_delegators :@credentials, :[], :fetch, :empty?, :key?, :each, :to_hash
 
       def self.from_rack_env(env)
         new(env.fetch(Rails::Auth::Env::CREDENTIALS_ENV_KEY, {}))
