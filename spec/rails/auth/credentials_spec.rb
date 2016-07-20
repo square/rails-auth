@@ -21,10 +21,29 @@ RSpec.describe Rails::Auth::Credentials do
     end
   end
 
-  describe "[]=" do
-    it "raises AlreadyAuthorizedError if credential has already been set" do
+  context "when called twice for the same credential type" do
+    let(:example_credential) { double(:credential1) }
+    let(:second_credential)  { double(:credential2) }
+
+    let(:example_env) { Rack::MockRequest.env_for("https://www.example.com") }
+
+    it "succeeds if the credentials are the same" do
+      allow(example_credential).to receive(:==).and_return(true)
+
+      Rails::Auth.add_credential(example_env, example_credential_type, example_credential)
+
       expect do
-        credentials[example_credential_type] = example_credential_value
+        Rails::Auth.add_credential(example_env, example_credential_type, second_credential)
+      end.to_not raise_error
+    end
+
+    it "raises Rails::Auth::AlreadyAuthorizedError if the credentials are different" do
+      allow(example_credential).to receive(:==).and_return(false)
+
+      Rails::Auth.add_credential(example_env, example_credential_type, example_credential)
+
+      expect do
+        Rails::Auth.add_credential(example_env, example_credential_type, second_credential)
       end.to raise_error(Rails::Auth::AlreadyAuthorizedError)
     end
   end
