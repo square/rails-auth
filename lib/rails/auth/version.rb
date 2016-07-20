@@ -3,6 +3,6 @@
 module Rails
   # Pluggable authentication and authorization for Rack/Rails
   module Auth
-    VERSION = "2.0.2".freeze
+    VERSION = "2.0.3".freeze
   end
 end

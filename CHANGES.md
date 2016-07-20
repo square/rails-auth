@@ -1,3 +1,13 @@
+### 2.0.3 (2016-07-20)
+
+* [#39](https://github.com/square/rails-auth/pull/39)
+  Make credentials idempotent.
+  ([@tarcieri])
+
+* [#38](https://github.com/square/rails-auth/pull/38)
+  Monitor callback must respond to :call.
+  ([@tarcieri])
+
 ### 2.0.2 (2016-07-19)
 
 * [#37](https://github.com/square/rails-auth/pull/37)
