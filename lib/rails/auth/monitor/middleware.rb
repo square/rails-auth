@@ -5,7 +5,7 @@ module Rails
       # or failure. Useful for logging or monitoring systems for AuthZ failures
       class Middleware
         def initialize(app, callback)
-          raise TypeError, "expected Proc callback, got #{callback.class}" unless callback.is_a?(Proc)
+          raise ArgumentError, "callback must respond to :call" unless callback.respond_to?(:call)
 
           @app      = app
           @callback = callback
