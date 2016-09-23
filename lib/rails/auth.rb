@@ -8,3 +8,6 @@ require "rails/auth/config_builder"
 
 # Rails controller method support
 require "rails/auth/controller_methods"
+
+# Rails router constraint
+require "rails/auth/installed_constraint"
