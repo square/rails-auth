@@ -1,3 +1,9 @@
+### 2.1.0 (2016-09-24)
+
+* [#40](https://github.com/square/rails-auth/pull/40)
+  Add Rails router constraint for checking rails-auth is installed.
+  ([@drcapulet])
+
 ### 2.0.3 (2016-07-20)
 
 * [#39](https://github.com/square/rails-auth/pull/39)
@@ -156,3 +162,4 @@
 
 [@tarcieri]: https://github.com/tarcieri
 [@ewr]: https://github.com/ewr
+[@drcapulet]: https://github.com/drcapulet
