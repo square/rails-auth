@@ -1,3 +1,9 @@
+### 2.1.1 (2016-09-24)
+
+* [#41](https://github.com/square/rails-auth/pull/41)
+  Fix Rails router constraint for checking rails-auth is installed.
+  ([@drcapulet])
+
 ### 2.1.0 (2016-09-24)
 
 * [#40](https://github.com/square/rails-auth/pull/40)
