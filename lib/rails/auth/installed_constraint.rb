@@ -7,7 +7,7 @@ module Rails
       end
 
       def matches?(_request)
-        !@config.middleware.include?(Rails::Auth::ACL::Middleware)
+        @config.middleware.include?(Rails::Auth::ACL::Middleware)
       end
     end
   end
