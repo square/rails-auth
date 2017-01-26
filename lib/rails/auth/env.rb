@@ -51,8 +51,7 @@ module Rails
       #
       # @return [Hash] Rack environment
       def to_rack
-        credentials = @env[CREDENTIALS_ENV_KEY] ||= {}
-        credentials.merge!(@credentials.to_hash)
+        @env[CREDENTIALS_ENV_KEY] = (@env[CREDENTIALS_ENV_KEY] || {}).merge(@credentials.to_hash)
 
         @env[AUTHORIZED_ENV_KEY] = @authorized if @authorized
         @env[ALLOWED_BY_ENV_KEY] = @allowed_by if @allowed_by
