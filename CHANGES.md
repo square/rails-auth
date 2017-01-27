@@ -1,3 +1,9 @@
+### 2.1.2 (2017-01-27)
+
+* [#42](https://github.com/square/rails-auth/pull/42)
+  Don't leak credentials between requests in test / development.
+  ([@nerdrew])
+
 ### 2.1.1 (2016-09-24)
 
 * [#41](https://github.com/square/rails-auth/pull/41)
