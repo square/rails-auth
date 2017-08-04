@@ -1,3 +1,9 @@
+### 2.1.3 (2017-08-04)
+
+* [#44](https://github.com/square/rails-auth/pull/44)
+  Normalize abnormal whitespace in PEM certificates for Passenger 5.
+  ([@drcapulet])
+
 ### 2.1.2 (2017-01-27)
 
 * [#42](https://github.com/square/rails-auth/pull/42)
