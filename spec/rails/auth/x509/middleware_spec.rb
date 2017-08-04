@@ -33,6 +33,13 @@ RSpec.describe Rails::Auth::X509::Middleware do
         _response, env = middleware.call(request.merge(example_key => bad_cert_pem))
         expect(Rails::Auth.credentials(env)).to be_empty
       end
+
+      it "normalizes abnormal whitespace" do
+        _response, env = middleware.call(request.merge(example_key => valid_cert_pem.tr("\n", "\t")))
+
+        credential = Rails::Auth.credentials(env).fetch("x509")
+        expect(credential).to be_a Rails::Auth::X509::Certificate
+      end
     end
 
     # :nocov:
