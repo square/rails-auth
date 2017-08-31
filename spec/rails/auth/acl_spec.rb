@@ -31,4 +31,17 @@ RSpec.describe Rails::Auth::ACL do
       expect(resources.first.path).to eq %r{\A/foo/bar/.*\z}
     end
   end
+
+  describe ".from_yaml" do
+    subject { example_acl }
+
+    context "when given an invalid YAML file" do
+      let(:example_config) { fixture_path("example_invalid_acl.yml").read }
+
+      it "raises an error" do
+        expect { subject }.to raise_error Rails::Auth::ParseError,
+          'ACL lint failed: The same key is defined more than once: 0.resources.0.method, The same key is defined more than once: 0.resources.1.path'
+      end
+    end
+  end
 end

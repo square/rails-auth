@@ -17,6 +17,15 @@ module Rails
       # @param [String] :yaml serialized YAML to load an ACL from
       def self.from_yaml(yaml, **args)
         require "yaml"
+        require "yamllint"
+
+        linter = YamlLint::Linter.new
+        linter.check_stream(StringIO.new(yaml))
+        if linter.errors?
+          # Always in the format of {"" => ["msg1", "msg2", ...]}
+          msg = linter.errors[""].join(", ")
+          raise ParseError, "ACL lint failed: #{msg}"
+        end
         new(YAML.load(yaml), **args)
       end
 

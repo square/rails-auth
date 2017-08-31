@@ -1,3 +1,9 @@
+### 2.2.0 (2017-08-31)
+
+* [#46](https://github.com/square/rails-auth/pull/46)
+  Add linting for YAML acl checks (i.e. prevent duplicate keys)
+  ([@cgthornt])
+
 ### 2.1.3 (2017-08-04)
 
 * [#44](https://github.com/square/rails-auth/pull/44)

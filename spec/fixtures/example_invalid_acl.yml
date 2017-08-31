@@ -1,0 +1,7 @@
+---
+- resources:
+  - method: ALL
+    method: POST
+    path: /foo/bar/.*
+  - path: /foo/bar
+    path: /bar
