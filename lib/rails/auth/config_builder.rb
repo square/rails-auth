@@ -11,7 +11,7 @@ module Rails
           matchers: matchers
         )
 
-        config.middleware.use Rails::Auth::ACL::Middleware, acl: config.x.acl
+        config.middleware.use Rails::Auth::ACL::Middleware, acl: config.x.rails_auth.acl
       end
 
       # Development configuration (i.e. config/environments/development.rb)
