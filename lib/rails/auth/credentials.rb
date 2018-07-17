@@ -10,7 +10,7 @@ module Rails
       extend Forwardable
       include Enumerable
 
-      def_delegators :@credentials, :fetch, :empty?, :key?, :each, :to_hash
+      def_delegators :@credentials, :fetch, :empty?, :key?, :each, :to_hash, :values
 
       def self.from_rack_env(env)
         new(env.fetch(Rails::Auth::Env::CREDENTIALS_ENV_KEY, {}))

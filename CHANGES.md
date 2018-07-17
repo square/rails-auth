@@ -1,3 +1,9 @@
+### 2.1.4 (2018-07-12)
+
+* [#51](https://github.com/square/rails-auth/pull/51)
+  Fix bug in `permit` custom matcher so that a description is rendered.
+  ([@yellow-beard])
+
 ### 2.1.3 (2017-08-04)
 
 * [#44](https://github.com/square/rails-auth/pull/44)
