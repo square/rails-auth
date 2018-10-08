@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Rails::Auth::ACL::Matchers::AllowAll do
   let(:matcher)     { described_class.new(enabled) }
   let(:example_env) { env_for(:get, "/") }

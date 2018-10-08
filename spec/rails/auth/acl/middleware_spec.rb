@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "logger"
 
 RSpec.describe Rails::Auth::ACL::Middleware do

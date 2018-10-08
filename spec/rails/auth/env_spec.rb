@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Rails::Auth::Env do
   let(:rack_env)          { Rack::MockRequest.env_for("https://www.example.com") }
   let(:example_authority) { "some-authority" }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "logger"
 
 RSpec.describe Rails::Auth::X509::Middleware do

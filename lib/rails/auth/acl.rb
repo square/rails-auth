@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Pull in default matchers
 require "rails/auth/acl/matchers/allow_all"
 
@@ -17,7 +19,9 @@ module Rails
       # @param [String] :yaml serialized YAML to load an ACL from
       def self.from_yaml(yaml, **args)
         require "yaml"
+        # rubocop:todo Security/YAMLLoad
         new(YAML.load(yaml), **args)
+        # rubocop:enable Security/YAMLLoad
       end
 
       # @param [Array<Hash>] :acl Access Control List configuration

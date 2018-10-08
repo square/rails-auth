@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rails
   module Auth
     module ErrorPage
@@ -32,6 +34,7 @@ module Rails
           accept_format = env["HTTP_ACCEPT"]
           return :json if accept_format && accept_format.downcase.start_with?("application/json")
           return :json if env["PATH_INFO"] && env["PATH_INFO"].end_with?(".json")
+
           nil
         end
       end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Rails::Auth::X509::Matcher do
   let(:example_cert)        { OpenSSL::X509::Certificate.new(cert_path("valid.crt").read) }
   let(:example_certificate) { Rails::Auth::X509::Certificate.new(example_cert) }

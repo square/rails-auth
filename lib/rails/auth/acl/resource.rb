@@ -8,10 +8,10 @@ module Rails
         attr_reader :http_methods, :path, :host, :matchers
 
         # Valid HTTP methods
-        HTTP_METHODS = %w(GET HEAD PUT POST DELETE OPTIONS PATCH LINK UNLINK).freeze
+        HTTP_METHODS = %w[GET HEAD PUT POST DELETE OPTIONS PATCH LINK UNLINK].freeze
 
         # Options allowed for resource matchers
-        VALID_OPTIONS = %w(method path host).freeze
+        VALID_OPTIONS = %w[method path host].freeze
 
         # @option :options [String] :method HTTP method allowed ("ALL" for all methods)
         # @option :options [String] :path path to the resource (regex syntax allowed)
@@ -46,6 +46,7 @@ module Rails
         #
         def match(env)
           return nil unless match!(env)
+
           name, = @matchers.find { |_name, matcher| matcher.match(env) }
           name
         end
@@ -58,9 +59,10 @@ module Rails
         # @return [Boolean] method and path *only* match the given environment
         #
         def match!(env)
-          return false unless @http_methods.include?(env["REQUEST_METHOD".freeze])
-          return false unless @path =~ env["PATH_INFO".freeze]
-          return false unless @host.nil? || @host =~ env["HTTP_HOST".freeze]
+          return false unless @http_methods.include?(env["REQUEST_METHOD"])
+          return false unless @path =~ env["PATH_INFO"]
+          return false unless @host.nil? || @host =~ env["HTTP_HOST"]
+
           true
         end
 

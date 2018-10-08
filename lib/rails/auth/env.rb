@@ -5,13 +5,13 @@ module Rails
     # Wrapper for Rack environments with Rails::Auth helpers
     class Env
       # Rack environment key for marking external authorization
-      AUTHORIZED_ENV_KEY = "rails-auth.authorized".freeze
+      AUTHORIZED_ENV_KEY = "rails-auth.authorized"
 
       # Rack environment key for storing what allowed the request
-      ALLOWED_BY_ENV_KEY = "rails-auth.allowed-by".freeze
+      ALLOWED_BY_ENV_KEY = "rails-auth.allowed-by"
 
       # Rack environment key for all rails-auth credentials
-      CREDENTIALS_ENV_KEY = "rails-auth.credentials".freeze
+      CREDENTIALS_ENV_KEY = "rails-auth.credentials"
 
       attr_reader :allowed_by, :credentials
 
@@ -44,6 +44,7 @@ module Rails
       def allowed_by=(allowed_by)
         raise AlreadyAuthorizedError, "already allowed by #{@allowed_by.inspect}" if @allowed_by
         raise TypeError, "expected String for allowed_by, got #{allowed_by.class}" unless allowed_by.is_a?(String)
+
         @allowed_by = allowed_by
       end
 

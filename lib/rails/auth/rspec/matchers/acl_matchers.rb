@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define(:permit) do |env|
   description do
     method      = env["REQUEST_METHOD"]

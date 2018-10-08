@@ -18,6 +18,7 @@ module Rails
 
       def initialize(credentials = {})
         raise TypeError, "expected Hash, got #{credentials.class}" unless credentials.is_a?(Hash)
+
         @credentials = credentials
       end
 
@@ -25,6 +26,7 @@ module Rails
         return if @credentials.key?(type) && @credentials[type] == value
         raise TypeError, "expected String for type, got #{type.class}" unless type.is_a?(String)
         raise AlreadyAuthorizedError, "credential '#{type}' has already been set" if @credentials.key?(type)
+
         @credentials[type] = value
       end
 

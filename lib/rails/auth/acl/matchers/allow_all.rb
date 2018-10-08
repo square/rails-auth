@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rails
   module Auth
     class ACL
@@ -7,6 +9,7 @@ module Rails
         class AllowAll
           def initialize(enabled)
             raise ArgumentError, "enabled must be true/false" unless [true, false].include?(enabled)
+
             @enabled = enabled
           end
 
