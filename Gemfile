@@ -11,7 +11,7 @@ group :development, :test do
 
   gem "rake"
   gem "rspec"
-  gem "rubocop", "0.38.0"
+  gem "rubocop", "0.49.0"
   gem "coveralls", require: false
   gem "certificate_authority", require: false
 end
