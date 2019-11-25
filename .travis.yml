@@ -10,12 +10,15 @@ before_install:
 bundler_args: --without development
 
 rvm:
-  - 2.0.0
-  - 2.1.10
-  - 2.2.4
-  - 2.3.0
+  - 2.4
+  - 2.5
+  - 2.6
 matrix:
   include:
-    - rvm: jruby-9.0.5.0
+    - rvm: jruby
+      jdk: openjdk8
+      env: JRUBY_OPTS="--debug" # for simplecov
+    - rvm: jruby
+      jdk: openjdk11
       env: JRUBY_OPTS="--debug" # for simplecov
   fast_finish: true

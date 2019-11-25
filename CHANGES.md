@@ -1,3 +1,8 @@
+### Unreleased
+* [#57](https://github.com/square/rails-auth/pull/57)
+  Add support for latest versions of Ruby, JRuby and Bundler 2.
+  ([@mbyczkowski])
+
 ### 2.1.4 (2018-07-12)
 
 * [#51](https://github.com/square/rails-auth/pull/51)
