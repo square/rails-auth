@@ -49,10 +49,12 @@ RSpec.describe Rails::Auth::X509::Middleware do
 
       let(:java_cert) do
         ruby_cert = OpenSSL::X509::Certificate.new(valid_cert_pem)
-        Java::SunSecurityX509::X509CertImpl.new(ruby_cert.to_der.to_java_bytes)
+        input_stream = Java::JavaIO::ByteArrayInputStream.new(ruby_cert.to_der.to_java_bytes)
+        java_cert_klass = Java::JavaSecurityCert::CertificateFactory.getInstance("X.509")
+        java_cert_klass.generateCertificate(input_stream)
       end
 
-      it "extracts Rails::Auth::Credential::X509 from a Java::SunSecurityX509::X509CertImpl" do
+      it "extracts Rails::Auth::Credential::X509 from a java.security.cert.Certificate" do
         skip "JRuby only" unless defined?(JRUBY_VERSION)
 
         _response, env = middleware.call(request.merge(example_key => [java_cert]))
