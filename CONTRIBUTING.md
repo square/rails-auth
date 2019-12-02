@@ -1,14 +1,15 @@
-### Sign the CLA
+# Contributing
 
-Any contributors to the master *rails-auth* repository must sign the
-[Individual Contributor License Agreement (CLA)]. It's a short form that covers
-our bases and makes sure you're eligible to contribute.
+If you would like to contribute code to *rails-auth* you can do so through GitHub by
+forking the repository and sending a pull request.
 
-### Submitting a Pull Request
+When submitting code, please make every effort to follow existing conventions
+and style in order to keep the code as readable as possible. Please also make
+sure all tests pass by running `bundle exec rspec spec`, and format your code
+according to `rubocop` rules.
 
-When you have a change you'd like to see in the master repository, send a
-[pull request]. Before we merge your request, we'll make sure you're in the list
-of people who have signed a CLA.
+Before your code can be accepted into the project you must also sign the
+Individual Contributor License Agreement.  We use [cla-assistant.io][1] and you
+will be prompted to sign once a pull request is opened.
 
-[Individual Contributor License Agreement (CLA)]: https://spreadsheets.google.com/spreadsheet/viewform?formkey=dDViT2xzUHAwRkI3X3k5Z0lQM091OGc6MQ&ndplr=1
-[pull request]: https://github.com/square/rails-auth/pulls
+[1]: https://cla-assistant.io/
