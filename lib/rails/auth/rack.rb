@@ -27,3 +27,4 @@ require "rails/auth/x509/filter/pem"
 require "rails/auth/x509/filter/java" if defined?(JRUBY_VERSION)
 require "rails/auth/x509/matcher"
 require "rails/auth/x509/middleware"
+require "rails/auth/x509/subject_alt_name_extension"

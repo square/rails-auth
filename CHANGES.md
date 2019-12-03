@@ -1,4 +1,11 @@
 ### Unreleased
+
+* [#59](https://github.com/square/rails-auth/pull/59)
+  Expose X.509 Subject Alternative Name extension
+  in the Rails::Auth::X509::Certificate and provide a convenience
+  method `spiffe_id` to expose [SPIFFE ID](https://spiffe.io).
+  (@mbyczkowski)
+
 * [#57](https://github.com/square/rails-auth/pull/57)
   Add support for latest versions of Ruby, JRuby and Bundler 2.
   ([@mbyczkowski])
