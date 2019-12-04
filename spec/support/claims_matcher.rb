@@ -1,4 +1,6 @@
 # A strawman matcher for claims-based credentials for use in tests
+# frozen_string_literal: true
+
 class ClaimsMatcher
   def initialize(options)
     @options = options

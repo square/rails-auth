@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Rails::Auth::ControllerMethods do
   let(:controller_class) do
     Class.new do

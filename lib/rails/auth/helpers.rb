@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rails
   # Modular resource-based authentication and authorization for Rails/Rack
   module Auth

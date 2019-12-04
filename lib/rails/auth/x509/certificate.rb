@@ -27,12 +27,12 @@ module Rails
         end
 
         def cn
-          @subject["CN".freeze]
+          @subject["CN"]
         end
         alias common_name cn
 
         def ou
-          @subject["OU".freeze]
+          @subject["OU"]
         end
         alias organizational_unit ou
 

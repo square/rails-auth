@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require "certificate_authority"
 require "fileutils"
 
-cert_path = File.expand_path("../../../tmp/certs", __FILE__)
+cert_path = File.expand_path("../../tmp/certs", __dir__)
 FileUtils.mkdir_p(cert_path)
 
 #
@@ -15,7 +17,7 @@ ca.serial_number.number = 1
 ca.key_material.generate_key
 ca.signing_entity = true
 
-ca.sign! "extensions" => { "keyUsage" => { "usage" => %w(critical keyCertSign) } }
+ca.sign! "extensions" => { "keyUsage" => { "usage" => %w[critical keyCertSign] } }
 
 ca_cert_path = File.join(cert_path, "ca.crt")
 ca_key_path  = File.join(cert_path, "ca.key")

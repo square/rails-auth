@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Rails::Auth::ACL::Resource do
   let(:example_method) { "GET" }
   let(:another_method) { "POST" }

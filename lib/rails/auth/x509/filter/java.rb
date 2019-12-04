@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rails
   module Auth
     module X509
@@ -6,6 +8,7 @@ module Rails
         class Java
           def call(certs)
             return if certs.nil? || certs.empty?
+
             OpenSSL::X509::Certificate.new(certs[0].get_encoded).freeze
           end
         end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rails
   module Auth
     # Rails constraint to make sure the ACLs have been installed

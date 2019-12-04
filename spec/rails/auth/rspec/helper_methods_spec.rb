@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "ostruct"
 
 RSpec.describe Rails::Auth::RSpec::HelperMethods, acl_spec: true do

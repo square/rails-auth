@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rails
   module Auth
     class ACL
@@ -25,6 +27,7 @@ module Rails
           unless Rails::Auth.authorized?(env)
             matcher_name = @acl.match(env)
             raise NotAuthorizedError, "unauthorized request" unless matcher_name
+
             Rails::Auth.set_allowed_by(env, "matcher:#{matcher_name}")
           end
 

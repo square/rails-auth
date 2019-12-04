@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rails
   module Auth
     module RSpec
@@ -12,6 +14,7 @@ module Rails
         # NOTE: Credentials will be *cleared* after the block. Nesting is not allowed.
         def with_credentials(credentials = {})
           raise TypeError, "expected Hash of credentials, got #{credentials.class}" unless credentials.is_a?(Hash)
+
           test_credentials.clear
 
           credentials.each do |type, value|
@@ -24,8 +27,8 @@ module Rails
         # Creates an Rails::Auth::X509::Certificate instance double
         def x509_certificate(cn: nil, ou: nil)
           subject = ""
-          subject << "CN=#{cn}" if cn
-          subject << "OU=#{ou}" if ou
+          subject += "CN=#{cn}" if cn
+          subject += "OU=#{ou}" if ou
 
           instance_double(Rails::Auth::X509::Certificate, subject, cn: cn, ou: ou).tap do |certificate|
             allow(certificate).to receive(:[]) do |key|
@@ -47,9 +50,7 @@ module Rails
             path = self.class.description
 
             # Warn if methods are improperly used
-            unless path.chars[0] == "/"
-              raise ArgumentError, "expected #{path} to start with '/'"
-            end
+            raise ArgumentError, "expected #{path} to start with '/'" unless path.chars[0] == "/"
 
             env = {
               "REQUEST_METHOD" => method,

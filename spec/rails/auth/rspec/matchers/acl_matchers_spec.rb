@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe "RSpec ACL matchers", acl_spec: true do
   let(:example_certificate) { x509_certificate_hash(ou: "ponycopter") }
   let(:another_certificate) { x509_certificate_hash(ou: "derpderp") }

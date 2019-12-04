@@ -40,7 +40,7 @@ module Rails
 
         def call(env)
           credential = extract_credential(env)
-          Rails::Auth.add_credential(env, "x509".freeze, credential.freeze) if credential
+          Rails::Auth.add_credential(env, "x509", credential.freeze) if credential
 
           @app.call(env)
         end
@@ -62,6 +62,7 @@ module Rails
           end
 
           raise CertificateVerifyFailed, "no client certificate in request" if @require_cert
+
           nil
         end
 
@@ -72,8 +73,8 @@ module Rails
           end
 
           filter.call(raw_cert)
-        rescue => ex
-          @logger.debug("rails-auth: Certificate error: #{ex.class}: #{ex.message}") if @logger
+        rescue StandardError => e
+          @logger.debug("rails-auth: Certificate error: #{e.class}: #{e.message}") if @logger
           nil
         end
 

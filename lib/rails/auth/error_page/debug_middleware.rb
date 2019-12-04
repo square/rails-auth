@@ -26,7 +26,7 @@ module Rails
 
           @app = app
           @acl = acl
-          @erb = ERB.new(File.read(File.expand_path("../debug_page.html.erb", __FILE__))).freeze
+          @erb = ERB.new(File.read(File.expand_path("debug_page.html.erb", __dir__))).freeze
         end
 
         def call(env)

@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require "active_support/hash_with_indifferent_access"
 
+# rubocop:disable Naming/MemoizedInstanceVariableName
 module Rails
   module Auth
     # Convenience methods designed to be included in an ActionController::Base subclass
@@ -18,3 +21,4 @@ module Rails
     end
   end
 end
+# rubocop:enable Naming/MemoizedInstanceVariableName

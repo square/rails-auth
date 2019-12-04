@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Rails::Auth::Credentials::InjectorMiddleware do
   let(:request)     { Rack::MockRequest.env_for("https://www.example.com") }
   let(:app)         { ->(env) { [200, env, "Hello, world!"] } }

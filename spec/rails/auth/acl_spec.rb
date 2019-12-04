@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Rails::Auth::ACL do
   let(:example_config) { fixture_path("example_acl.yml").read }
 

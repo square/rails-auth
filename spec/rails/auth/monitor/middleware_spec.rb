@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Rails::Auth::Monitor::Middleware do
   let(:request) { Rack::MockRequest.env_for("https://www.example.com") }
 

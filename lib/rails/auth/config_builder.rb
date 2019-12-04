@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rails
   module Auth
     # Configures Rails::Auth middleware for use in a Rails application
@@ -49,6 +51,7 @@ module Rails
         end
 
         return unless monitor
+
         config.middleware.insert_before Rails::Auth::ACL::Middleware,
                                         Rails::Auth::Monitor::Middleware,
                                         monitor
@@ -68,6 +71,7 @@ module Rails
                                           Rails::Auth::ErrorPage::Middleware,
                                           page_body: Pathname(error_page).read
         when FalseClass, NilClass
+          nil
         else raise TypeError, "bad error page mode: #{mode.inspect}"
         end
       end

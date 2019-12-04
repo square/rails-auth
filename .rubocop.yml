@@ -4,8 +4,11 @@ AllCops:
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
-Style/ModuleFunction:
+Layout/HashAlignment:
   Enabled: false
+
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'context']
 
 Metrics/ParameterLists:
   Max: 5
@@ -22,3 +25,12 @@ Metrics/AbcSize:
 
 Metrics/CyclomaticComplexity:
   Max: 8
+
+Naming/MethodParameterName:
+  MinNameLength: 2
+
+Style/ModuleFunction:
+  Enabled: false
+
+Style/SafeNavigation:
+  Enabled: false
