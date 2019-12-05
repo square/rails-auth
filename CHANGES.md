@@ -1,4 +1,4 @@
-### Unreleased
+### 2.2.0 (2019-12-05)
 
 * [#55](https://github.com/square/rails-auth/pull/55)
   Allow dynamic injection of credentials.
