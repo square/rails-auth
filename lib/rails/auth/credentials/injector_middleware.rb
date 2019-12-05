@@ -5,7 +5,8 @@ module Rails
     class Credentials
       # A middleware for injecting an arbitrary credentials hash into the Rack environment
       # This is intended for development and testing purposes where you would like to
-      # simulate a given X.509 certificate being used in a request or user logged in
+      # simulate a given X.509 certificate being used in a request or user logged in.
+      # The credentials argument should either be a hash or a proc that returns one.
       class InjectorMiddleware
         def initialize(app, credentials)
           @app = app
@@ -13,7 +14,8 @@ module Rails
         end
 
         def call(env)
-          env[Rails::Auth::Env::CREDENTIALS_ENV_KEY] = @credentials
+          credentials = @credentials.respond_to?(:call) ? @credentials.call(env) : @credentials
+          env[Rails::Auth::Env::CREDENTIALS_ENV_KEY] = credentials
           @app.call(env)
         end
       end

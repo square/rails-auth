@@ -1,5 +1,9 @@
 ### Unreleased
 
+* [#55](https://github.com/square/rails-auth/pull/55)
+  Allow dynamic injection of credentials.
+  ([@drcapulet])
+
 * [#59](https://github.com/square/rails-auth/pull/59)
   Expose X.509 Subject Alternative Name extension
   in the Rails::Auth::X509::Certificate and provide a convenience
