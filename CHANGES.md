@@ -4,7 +4,7 @@
   Expose X.509 Subject Alternative Name extension
   in the Rails::Auth::X509::Certificate and provide a convenience
   method `spiffe_id` to expose [SPIFFE ID](https://spiffe.io).
-  (@mbyczkowski)
+  ([@mbyczkowski])
 
 * [#57](https://github.com/square/rails-auth/pull/57)
   Add support for latest versions of Ruby, JRuby and Bundler 2.
@@ -196,6 +196,9 @@
 * Vaporware release to claim the "rails-auth" gem name
 
 
-[@tarcieri]: https://github.com/tarcieri
-[@ewr]: https://github.com/ewr
 [@drcapulet]: https://github.com/drcapulet
+[@ewr]: https://github.com/ewr
+[@mbyczkowski]: https://github.com/mbyczkowski
+[@nerdrew]: https://github.com/nerdrew
+[@tarcieri]: https://github.com/tarcieri
+[@yellow-beard]: https://github.com/yellow-beard
