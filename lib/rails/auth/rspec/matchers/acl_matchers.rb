@@ -6,9 +6,9 @@ RSpec::Matchers.define(:permit) do |env|
     credentials = Rails::Auth.credentials(env)
     message     = "allow #{method}s by "
 
-    return message << "unauthenticated clients" if credentials.count.zero?
+    return message + "unauthenticated clients" if credentials.count.zero?
 
-    message << credentials.values.map(&:inspect).join(", ")
+    message + credentials.values.map(&:inspect).join(", ")
   end
 
   match { |acl| acl.match(env) }
