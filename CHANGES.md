@@ -1,4 +1,4 @@
-### Unreleased
+### 2.2.1 (2020-01-08)
 
 * [#63](https://github.com/square/rails-auth/pull/63)
   Fix `FrozenError` in `permit` matcher description.
