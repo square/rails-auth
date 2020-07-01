@@ -1,3 +1,9 @@
+### Unreleased
+
+* [#65](https://github.com/square/rails-auth/pull/65)
+  Fix error when passing `truststore` instead of `ca_file` to X509 middleware.
+  ([@drcapulet])
+
 ### 2.2.1 (2020-01-08)
 
 * [#63](https://github.com/square/rails-auth/pull/63)
