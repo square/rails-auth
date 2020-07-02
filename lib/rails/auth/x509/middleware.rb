@@ -12,20 +12,21 @@ module Rails
         # Create a new X.509 Middleware object
         #
         # @param [Object]               app next app in the Rack middleware chain
-        # @param [Hash]                 cert_filters maps Rack environment names to cert extractors
         # @param [String]               ca_file path to the CA bundle to verify client certs with
-        # @param [OpenSSL::X509::Store] truststore (optional) provide your own truststore (for e.g. CRLs)
+        # @param [Hash]                 cert_filters maps Rack environment names to cert extractors
+        # @param [Logger]               logger place to log verification successes & failures
         # @param [Boolean]              require_cert causes middleware to raise if certs are unverified
+        # @param [OpenSSL::X509::Store] truststore (optional) provide your own truststore (for e.g. CRLs)
         #
         # @return [Rails::Auth::X509::Middleware] new X509 middleware instance
-        def initialize(app, cert_filters: {}, ca_file: nil, truststore: nil, require_cert: false, logger: nil)
-          raise ArgumentError, "no ca_file given" unless ca_file
+        def initialize(app, ca_file: nil, cert_filters: {}, logger: nil, require_cert: false, truststore: nil)
+          raise ArgumentError, "no ca_file or truststore given" unless ca_file || truststore
 
           @app          = app
-          @logger       = logger
-          @truststore   = truststore || OpenSSL::X509::Store.new.add_file(ca_file)
-          @require_cert = require_cert
           @cert_filters = cert_filters
+          @logger       = logger
+          @require_cert = require_cert
+          @truststore   = truststore || OpenSSL::X509::Store.new.add_file(ca_file)
 
           @cert_filters.each do |key, filter|
             next unless filter.is_a?(Symbol)
