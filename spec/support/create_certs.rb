@@ -95,20 +95,3 @@ valid_key_with_ext_path  = File.join(cert_path, "valid_with_ext.key")
 
 File.write valid_cert_with_ext_path, valid_cert_with_ext.to_pem
 File.write valid_key_with_ext_path,  valid_cert_with_ext.key_material.private_key.to_pem
-
-#
-# Create evil MitM self-signed certificate
-#
-
-self_signed_cert = CertificateAuthority::Certificate.new
-self_signed_cert.subject.common_name = "127.0.0.1"
-self_signed_cert.subject.organizational_unit = "ponycopter"
-self_signed_cert.serial_number.number = 2
-self_signed_cert.key_material.generate_key
-self_signed_cert.sign!
-
-self_signed_cert_path = File.join(cert_path, "invalid.crt")
-self_signed_key_path  = File.join(cert_path, "invalid.key")
-
-File.write self_signed_cert_path, self_signed_cert.to_pem
-File.write self_signed_key_path,  self_signed_cert.key_material.private_key.to_pem

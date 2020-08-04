@@ -1,3 +1,10 @@
+### Unreleased
+
+* [#67](https://github.com/square/rails-auth/pull/67)
+  Remove `ca_file`, `require_cert`, and `truststore` options to X509 middleware
+  as we no longer verify the certificate chain.
+  ([@drcapulet])
+
 ### 2.2.2 (2020-07-02)
 
 * [#65](https://github.com/square/rails-auth/pull/65)
