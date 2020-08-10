@@ -1,5 +1,10 @@
 ### Unreleased
 
+* [#68](https://github.com/square/rails-auth/pull/68)
+  Remove `ca_file` and `require_cert` options to the config builder as we no
+  longer verify the certificate chain.
+  ([@drcapulet])
+
 * [#67](https://github.com/square/rails-auth/pull/67)
   Remove `ca_file`, `require_cert`, and `truststore` options to X509 middleware
   as we no longer verify the certificate chain.
