@@ -1,4 +1,4 @@
-### Unreleased
+### 3.0.0 (2020-08-10)
 
 * [#68](https://github.com/square/rails-auth/pull/68)
   Remove `ca_file` and `require_cert` options to the config builder as we no
