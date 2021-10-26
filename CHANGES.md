@@ -1,3 +1,9 @@
+### Unreleased
+
+* [#70](https://github.com/square/rails-auth/pull/70)
+  Support URL-encoded PEMs to support new Puma header requirements.
+  ([@drcapulet])
+
 ### 3.0.0 (2020-08-10)
 
 * [#68](https://github.com/square/rails-auth/pull/68)
