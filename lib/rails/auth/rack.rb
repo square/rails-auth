@@ -24,6 +24,7 @@ require "rails/auth/monitor/middleware"
 
 require "rails/auth/x509/certificate"
 require "rails/auth/x509/filter/pem"
+require "rails/auth/x509/filter/pem_urlencoded"
 require "rails/auth/x509/filter/java" if defined?(JRUBY_VERSION)
 require "rails/auth/x509/matcher"
 require "rails/auth/x509/middleware"
