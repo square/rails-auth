@@ -19,9 +19,13 @@ module Rails
           extension = certificate.extensions.detect { |ext| ext.oid == "subjectAltName" }
           values = (extension&.value&.split(",") || []).map(&:strip)
 
-          @dns_names = values.grep(DNS_REGEX) { |v| v.sub(DNS_REGEX, "") }.freeze
-          @ips = values.grep(IP_REGEX) { |v| v.sub(IP_REGEX, "") }.freeze
-          @uris = values.grep(URI_REGEX) { |v| v.sub(URI_REGEX, "") }.freeze
+          @dns_names = filtered_names(DNS_REGEX, values)
+          @ips = filtered_names(IP_REGEX, values)
+          @uris = filtered_names(URI_REGEX, values)
+        end
+
+        def filtered_names(regex, values)
+          values.grep(regex) { |v| v.sub(regex, "") }.freeze
         end
       end
     end

@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   spec.bindir        = "exe"
   spec.require_paths = ["lib"]
 
-  spec.required_ruby_version = ">= 2.3.0"
+  spec.required_ruby_version = ">= 2.3.0" # rubocop:disable Gemspec/RequiredRubyVersion
 
   spec.add_runtime_dependency "rack"
 
