@@ -21,15 +21,14 @@ Gem::Specification.new do |spec|
 
   # Only allow gem to be pushed to https://rubygems.org
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
+  spec.metadata["rubygems_mfa_required"] = "true"
 
   spec.files         = `git ls-files`.split("\n")
   spec.bindir        = "exe"
   spec.require_paths = ["lib"]
 
-  spec.required_ruby_version = ">= 2.3.0"
+  spec.required_ruby_version = ">= 2.5.0"
 
-  spec.add_runtime_dependency "rack"
-
-  spec.add_development_dependency "bundler", ">= 1.10", "< 3"
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_dependency "activesupport"
+  spec.add_dependency "rack"
 end

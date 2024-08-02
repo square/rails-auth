@@ -19,9 +19,14 @@ module Rails
       # @param [String] :yaml serialized YAML to load an ACL from
       def self.from_yaml(yaml, **args)
         require "yaml"
-        # rubocop:todo Security/YAMLLoad
-        new(YAML.load(yaml), **args)
-        # rubocop:enable Security/YAMLLoad
+        new(
+          if YAML::VERSION >= "4.0"
+            YAML.safe_load(yaml, aliases: true)
+          else
+            YAML.safe_load(yaml, [], [], true)
+          end,
+          **args
+        )
       end
 
       # @param [Array<Hash>] :acl Access Control List configuration

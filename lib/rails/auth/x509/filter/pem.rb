@@ -11,7 +11,7 @@ module Rails
             # certificates are normally formatted in otherwise parsing with fail
             # with a 'nested asn1 error'. split(" ") handles sequential whitespace
             # characters like \t, \n, and space.
-            OpenSSL::X509::Certificate.new(pem.split(" ").instance_eval do
+            OpenSSL::X509::Certificate.new(pem.split.instance_eval do
               [[self[0], self[1]].join(" "), self[2...-2], [self[-2], self[-1]].join(" ")]
                 .flatten.join("\n")
             end).freeze

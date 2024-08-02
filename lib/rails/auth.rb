@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "active_support"
+require "active_support/core_ext/object"
+
 # Pull in core library components that work with any Rack application
 require "rails/auth/rack"
 

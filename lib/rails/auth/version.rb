@@ -3,6 +3,6 @@
 module Rails
   # Pluggable authentication and authorization for Rack/Rails
   module Auth
-    VERSION = "3.1.0"
+    VERSION = "3.2.0"
   end
 end
