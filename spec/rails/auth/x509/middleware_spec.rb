@@ -14,7 +14,7 @@ RSpec.describe Rails::Auth::X509::Middleware do
     described_class.new(
       app,
       cert_filters: { example_key => cert_filter },
-      logger: Logger.new(STDERR)
+      logger: Logger.new($stderr)
     )
   end
 

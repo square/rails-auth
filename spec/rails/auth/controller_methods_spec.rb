@@ -6,7 +6,7 @@ RSpec.describe Rails::Auth::ControllerMethods do
       attr_reader :request
 
       def initialize(env)
-        @request = OpenStruct.new(env: env)
+        @request = Struct.new(:env).new(env)
       end
 
       include Rails::Auth::ControllerMethods
